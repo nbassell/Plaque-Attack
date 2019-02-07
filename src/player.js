@@ -1,6 +1,6 @@
 import KeyHandler from './key_handler'
 import Bullet from './bullet';
-import Game from 
+// import Game from 
 
 //use switch case 38: case 87: etc.
 
@@ -18,11 +18,11 @@ export default class Player {
 
 
 
-  draw() {
-    this.ctx.drawImage(this.image, this.pos.x, this.pos.y);
-    this.fire.forEach((f, i) => {
-      f.draw();
-      if (f.pos.x > )
-    })
-  }
+  // draw() {
+  //   this.ctx.drawImage(this.image, this.pos.x, this.pos.y);
+  //   this.fire.forEach((f, i) => {
+  //     f.draw();
+  //     if (f.pos.x > )
+  //   })
+  // }
 }

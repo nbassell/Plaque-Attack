@@ -2,7 +2,7 @@ import Player from './player';
 import Bullet from './bullet';
 import Column from './column';
 import Target from './target';
-import Screen from './screen';
+import KeyHandler from './key_handler';
 
 
 
@@ -11,7 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
   canvas.width = W;
   canvas.height = H;
   const ctx = canvas.getContext('2d');
-  new Screen(ctx);
+  const screen = new Screen(ctx);
+  const player = new Player();
+  const keyHandler = new KeyHandler(player);
+
+  screen.drawBackground(ctx);
+  player.drawPlayer(ctx);
+
+  document.onkeydown = keyHandler.handleKeyPress;
+  document.onkeyup = keyHandler.handleKeyUp;
 })
 
 //Game logic here too?

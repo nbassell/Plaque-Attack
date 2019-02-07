@@ -1,4 +1,4 @@
-var Target = require('./target');
+import Destructable from './destructable';
 
 export default class Column {
   constructor() {

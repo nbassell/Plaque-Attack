@@ -1,8 +1,8 @@
-const KEYCODE_UP = 38;
-const KEYCODE_DOWN = 40;
-const KEYCODE_LEFT = 37;
-const KEYCODE_RIGHT = 39;
-const KEYCODE_SPACE = 32;
+const KEYCODE_UP = 38,
+      KEYCODE_DOWN = 40,
+      KEYCODE_LEFT = 37,
+      KEYCODE_RIGHT = 39,
+      KEYCODE_SPACE = 32;
 
 
 export default class KeyHandler {

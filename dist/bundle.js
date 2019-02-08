@@ -81,59 +81,116 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/game.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/g-radius.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/bullet.js":
-/*!***********************!*\
-  !*** ./src/bullet.js ***!
-  \***********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
-
-/***/ }),
-
-/***/ "./src/column.js":
-/*!***********************!*\
-  !*** ./src/column.js ***!
-  \***********************/
+/***/ "./src/background.js":
+/*!***************************!*\
+  !*** ./src/background.js ***!
+  \***************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Column; });
-/* harmony import */ var _destructable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./destructable */ "./src/destructable.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Background; });
+/* harmony import */ var _g_radius__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./g-radius */ "./src/g-radius.js");
 
 
-class Column {
-  constructor() {
-    this.velocity = velocity
+
+class Background {
+  constructor(ctx) {
+    this.ctx = ctx;
+    this.background = new Image();
+    this.background.src = './assets/images/bloodstream-bg.jpg'
+    this.size = {
+      x: 800, y: 500
+    };
+  }
+
+  drawBackground() {
+    this.ctx.clearRect(0, 0, _g_radius__WEBPACK_IMPORTED_MODULE_0__["W"], _g_radius__WEBPACK_IMPORTED_MODULE_0__["H"]);
+    this.ctx.drawImage(this.background, 0, 0, this.size.x, this.size.y);
   }
 }
 
 /***/ }),
 
-/***/ "./src/destructable.js":
-/*!*****************************!*\
-  !*** ./src/destructable.js ***!
-  \*****************************/
+/***/ "./src/bullet.js":
+/*!***********************!*\
+  !*** ./src/bullet.js ***!
+  \***********************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Destructable; });
-/* harmony import */ var _column__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./column */ "./src/column.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Bullet; });
+class Bullet {
+  constructor({ctx, x, y, dx, dy}) {
+    this.ctx = ctx;
+    this.image = new Image();
+    this.image.src = './assets/images/bullet.png'
+    this.pos = { x, y, dx, dy };
+  }
 
+  drawBullet() {
+    this.ctx.drawImage(this.image, this.pos.x, this.pos.y, 20, 20);
+  }
 
-class Destructable extends _column__WEBPACK_IMPORTED_MODULE_0__["default"] {
-  
+  update() {
+    this.pos.x += this.pos.dx;
+    this.pos.y += this.pos.dy;
+  }
 }
+
+/***/ }),
+
+/***/ "./src/g-radius.js":
+/*!*************************!*\
+  !*** ./src/g-radius.js ***!
+  \*************************/
+/*! exports provided: W, H */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "W", function() { return W; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "H", function() { return H; });
+/* harmony import */ var _player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./player */ "./src/player.js");
+/* harmony import */ var _game__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./game */ "./src/game.js");
+/* harmony import */ var _background__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./background */ "./src/background.js");
+
+
+
+
+const W = 800;
+const H = 500;
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = W;
+  canvas.height = H;
+  const game = new _game__WEBPACK_IMPORTED_MODULE_1__["default"](ctx, canvas);
+  // const player = new Player(ctx);
+  // debugger
+  const background = new _background__WEBPACK_IMPORTED_MODULE_2__["default"](ctx);
+  // const keyHandler = new KeyHandler(player);
+  // player.drawPlayer();
+  background.drawBackground();
+  game.play();
+  document.addEventListener("keypress", (e) => {
+    if (e.keyCode === 32) game.player.shoot();
+});
+})
+// window.game = game;
+
+
 
 /***/ }),
 
@@ -148,55 +205,41 @@ class Destructable extends _column__WEBPACK_IMPORTED_MODULE_0__["default"] {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Game; });
 /* harmony import */ var _player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./player */ "./src/player.js");
-/* harmony import */ var _bullet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./bullet */ "./src/bullet.js");
-/* harmony import */ var _bullet__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_bullet__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _column__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./column */ "./src/column.js");
-/* harmony import */ var _target__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./target */ "./src/target.js");
-/* harmony import */ var _key_handler__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./key_handler */ "./src/key_handler.js");
+/* harmony import */ var _background__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./background */ "./src/background.js");
 
 
-
-
-
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
-  const canvas = document.getElementById('canvas');
-  canvas.width = W;
-  canvas.height = H;
-  const ctx = canvas.getContext('2d');
-  const screen = new Screen(ctx);
-  const player = new _player__WEBPACK_IMPORTED_MODULE_0__["default"]();
-  const keyHandler = new _key_handler__WEBPACK_IMPORTED_MODULE_4__["default"](player);
-
-  screen.drawBackground(ctx);
-  player.drawPlayer(ctx);
-
-  document.onkeydown = keyHandler.handleKeyPress;
-  document.onkeyup = keyHandler.handleKeyUp;
-})
-
-//Game logic here too?
+// import Bullet from './bullet';
+// import Column from './column';
+// import Target from './target';
+// import KeyHandler from './key_handler';
 
 class Game {
   constructor(ctx, canvas) {
     this.ctx = ctx;
     this.canvas = canvas;
-    this.player = new _player__WEBPACK_IMPORTED_MODULE_0__["default"]({
-      position: [100, 500]
-    });
-    this.draw = this.draw.bind(this);
+    this.player = new _player__WEBPACK_IMPORTED_MODULE_0__["default"](ctx);
+    this.background = new _background__WEBPACK_IMPORTED_MODULE_1__["default"](ctx);
+    this.play = this.play.bind(this);
+    this.bullets = [];
     //spawn rate
     //columns
     //score
   }
 
+// newGame = () => {
+//   this.game = new Game();
+//   this.state = {
+//     paused: false,
+//   }
 
-  play() {
-    this.render();
-    this.update();
-  }
+//   this.startGame();
+// }
+
+
+  // play() {
+  //   this.render();
+  //   this.update();
+  // }
 
   update() {
     //wallCollisionCheck
@@ -218,11 +261,29 @@ class Game {
 
   }
 
-  draw(ctx) {
-
+  requestAnimFrame() {
+    return window.requestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      window.oRequestAnimationFrame ||
+      window.msRequestAnimationFrame ||
+      function (callback) {
+        window.setTimeout(callback, 1000 / 20);
+      }
   }
 
+  play() {
+    this.render();
+    this.requestAnimFrame()(this.play.bind(this));
+  }
 
+  render() {
+    this.background.drawBackground();
+    this.player.drawPlayer();
+    this.bullets.forEach((bullet) => {
+      bullet.drawBullet();
+    })
+  }
 
 }
 
@@ -232,11 +293,15 @@ class Game {
 /*!****************************!*\
   !*** ./src/key_handler.js ***!
   \****************************/
-/*! exports provided: default */
+/*! exports provided: UP, DOWN, LEFT, RIGHT, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UP", function() { return UP; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DOWN", function() { return DOWN; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LEFT", function() { return LEFT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RIGHT", function() { return RIGHT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return KeyHandler; });
 const KEYCODE_UP = 38,
       KEYCODE_DOWN = 40,
@@ -244,6 +309,10 @@ const KEYCODE_UP = 38,
       KEYCODE_RIGHT = 39,
       KEYCODE_SPACE = 32;
 
+let UP = false;
+let DOWN = false;
+let LEFT = false;
+let RIGHT = false;
 
 class KeyHandler {
   constructor(player) {
@@ -251,33 +320,61 @@ class KeyHandler {
 
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
+
+    document.onkeydown = this.handleKeyPress;
+    document.onkeyup = this.handleKeyUp;
   }
 
   handleKeyPress(e) {
     e.preventDefault();
 
+
     switch (e.keyCode) {
       case KEYCODE_UP:
-        this.player.moveUp();
+        UP = true;
+        // this.player.moveUp();
         break;
       case KEYCODE_DOWN:
-        this.player.moveDown();
+        DOWN = true;
+        // this.player.moveDown();
         break;
       case KEYCODE_LEFT:
-        this.player.moveLeft();
+        LEFT = true;
+        // this.player.moveLeft();
         break;
       case KEYCODE_RIGHT:
-        this.player.moveRight();
+        RIGHT = true;
+        // this.player.moveRight();
         break;
-      case KEYCODE_SPACE:
-        this.player.shoot();
-        break;
+      // case KEYCODE_SPACE:
+      //   this.player.shoot();
+      //   break;
     }
   }
 
   handleKeyUp(e) {
     e.preventDefault();
-    this.player.stopMoving();
+    switch (e.keyCode) {
+      case KEYCODE_UP:
+        UP = false;
+        // this.player.moveUp();
+        break;
+      case KEYCODE_DOWN:
+        DOWN = false;
+        // this.player.moveDown();
+        break;
+      case KEYCODE_LEFT:
+        LEFT = false;
+        // this.player.moveLeft();
+        break;
+      case KEYCODE_RIGHT:
+        RIGHT = false;
+        // this.player.moveRight();
+        break;
+      // case KEYCODE_SPACE:
+      //   this.player.shoot();
+      //   break;
+    }
   }
 }
 
@@ -293,9 +390,9 @@ class KeyHandler {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Player; });
-/* harmony import */ var _key_handler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./key_handler */ "./src/key_handler.js");
-/* harmony import */ var _bullet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./bullet */ "./src/bullet.js");
-/* harmony import */ var _bullet__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_bullet__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _bullet__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bullet */ "./src/bullet.js");
+/* harmony import */ var _key_handler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./key_handler */ "./src/key_handler.js");
+// import KeyHandler from './key_handler'
 
 
 // import Game from 
@@ -306,39 +403,64 @@ class Player {
   constructor(ctx) {
     this.ctx = ctx;
     this.image = new Image();
+    this.image.src = './assets/images/white-blood-cell.png';
     this.pos = {
-      x: 100, y: 300
+      x: 100, y: 250
     }
+    this.size = {
+      x: 35, y: 35
+    };
+    this.bullet = [];
     this.shoot = this.shoot.bind(this);
-    this.fire = [];
-    //where do i keep track of game timer?
+    // this.fire = [];
+    // this.speed = 3;
   }
 
+  drawPlayer() {
+    this.ctx.drawImage(this.image, this.pos.x, this.pos.y, this.size.x, this.size.y);
+    this.bullet.forEach((b, i) => {
+      b.drawBullet();
+      if (b.pos.x > 800) {
+        this.bullet.splice(i, 1);
+      } else {
+        b.update();
+      }
+    })
+  }
 
+  shoot() {
+    this.bullet.push(new _bullet__WEBPACK_IMPORTED_MODULE_0__["default"]({
+      ctx: this.ctx,
+      x: this.pos.x + 20,
+      y: this.pos.y + 5,
+      dx: 8,
+      dy: 0,
+    }))
+  }
 
-  // draw() {
-  //   this.ctx.drawImage(this.image, this.pos.x, this.pos.y);
-  //   this.fire.forEach((f, i) => {
-  //     f.draw();
-  //     if (f.pos.x > )
-  //   })
-  // }
-}
+  moveUp() {
+    if (_key_handler__WEBPACK_IMPORTED_MODULE_1__["UP"]) {
+      this.pos.y += this.speed;
+    }
+  }
 
-/***/ }),
+  moveDown() {
+    if (_key_handler__WEBPACK_IMPORTED_MODULE_1__["DOWN"]) {
+      this.pos.y -= this.speed;
+    }
+  }
 
-/***/ "./src/target.js":
-/*!***********************!*\
-  !*** ./src/target.js ***!
-  \***********************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+  moveLeft() {
+    if (_key_handler__WEBPACK_IMPORTED_MODULE_1__["LEFT"]) {
+      this.pos.x -= this.speed;
+    }
+  }
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Target; });
-class Target {
-
+  moveRight() {
+    if (_key_handler__WEBPACK_IMPORTED_MODULE_1__["RIGHT"]) {
+      this.pos.x += this.speed;
+    }
+  }
 }
 
 /***/ })

@@ -4,6 +4,10 @@ const KEYCODE_UP = 38,
       KEYCODE_RIGHT = 39,
       KEYCODE_SPACE = 32;
 
+export let UP = false;
+export let DOWN = false;
+export let LEFT = false;
+export let RIGHT = false;
 
 export default class KeyHandler {
   constructor(player) {
@@ -11,32 +15,60 @@ export default class KeyHandler {
 
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
+
+    document.onkeydown = this.handleKeyPress;
+    document.onkeyup = this.handleKeyUp;
   }
 
   handleKeyPress(e) {
     e.preventDefault();
 
+
     switch (e.keyCode) {
       case KEYCODE_UP:
-        this.player.moveUp();
+        UP = true;
+        // this.player.moveUp();
         break;
       case KEYCODE_DOWN:
-        this.player.moveDown();
+        DOWN = true;
+        // this.player.moveDown();
         break;
       case KEYCODE_LEFT:
-        this.player.moveLeft();
+        LEFT = true;
+        // this.player.moveLeft();
         break;
       case KEYCODE_RIGHT:
-        this.player.moveRight();
+        RIGHT = true;
+        // this.player.moveRight();
         break;
-      case KEYCODE_SPACE:
-        this.player.shoot();
-        break;
+      // case KEYCODE_SPACE:
+      //   this.player.shoot();
+      //   break;
     }
   }
 
   handleKeyUp(e) {
     e.preventDefault();
-    this.player.stopMoving();
+    switch (e.keyCode) {
+      case KEYCODE_UP:
+        UP = false;
+        // this.player.moveUp();
+        break;
+      case KEYCODE_DOWN:
+        DOWN = false;
+        // this.player.moveDown();
+        break;
+      case KEYCODE_LEFT:
+        LEFT = false;
+        // this.player.moveLeft();
+        break;
+      case KEYCODE_RIGHT:
+        RIGHT = false;
+        // this.player.moveRight();
+        break;
+      // case KEYCODE_SPACE:
+      //   this.player.shoot();
+      //   break;
+    }
   }
 }

@@ -1,5 +1,5 @@
-import Column from './column';
+// import Column from './column';
 
-export default class Destructable extends Column {
+// export default class Destructable extends Column {
   
-}
+// }

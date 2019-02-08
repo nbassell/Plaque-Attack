@@ -1,47 +1,37 @@
 import Player from './player';
-import Bullet from './bullet';
-import Column from './column';
-import Target from './target';
-import KeyHandler from './key_handler';
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
-  const canvas = document.getElementById('canvas');
-  canvas.width = W;
-  canvas.height = H;
-  const ctx = canvas.getContext('2d');
-  const screen = new Screen(ctx);
-  const player = new Player();
-  const keyHandler = new KeyHandler(player);
-
-  screen.drawBackground(ctx);
-  player.drawPlayer(ctx);
-
-  document.onkeydown = keyHandler.handleKeyPress;
-  document.onkeyup = keyHandler.handleKeyUp;
-})
-
-//Game logic here too?
+import Background from './background';
+// import Bullet from './bullet';
+// import Column from './column';
+// import Target from './target';
+// import KeyHandler from './key_handler';
 
 export default class Game {
   constructor(ctx, canvas) {
     this.ctx = ctx;
     this.canvas = canvas;
-    this.player = new Player({
-      position: [100, 500]
-    });
-    this.draw = this.draw.bind(this);
+    this.player = new Player(ctx);
+    this.background = new Background(ctx);
+    this.play = this.play.bind(this);
+    this.bullets = [];
     //spawn rate
     //columns
     //score
   }
 
+// newGame = () => {
+//   this.game = new Game();
+//   this.state = {
+//     paused: false,
+//   }
 
-  play() {
-    this.render();
-    this.update();
-  }
+//   this.startGame();
+// }
+
+
+  // play() {
+  //   this.render();
+  //   this.update();
+  // }
 
   update() {
     //wallCollisionCheck
@@ -63,10 +53,28 @@ export default class Game {
 
   }
 
-  draw(ctx) {
-
+  requestAnimFrame() {
+    return window.requestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      window.oRequestAnimationFrame ||
+      window.msRequestAnimationFrame ||
+      function (callback) {
+        window.setTimeout(callback, 1000 / 20);
+      }
   }
 
+  play() {
+    this.render();
+    this.requestAnimFrame()(this.play.bind(this));
+  }
 
+  render() {
+    this.background.drawBackground();
+    this.player.drawPlayer();
+    this.bullets.forEach((bullet) => {
+      bullet.drawBullet();
+    })
+  }
 
 }

@@ -1,35 +1,28 @@
-import Game from './game';
 import Player from './player';
-import KeyHandler from './key_handler';
+import Game from './game';
+import Background from './background';
 
+const W = 800;
+const H = 500;
+
+export { W, H };
 
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
   canvas.width = W;
   canvas.height = H;
-  const ctx = canvas.getContext('2d');
-  const screen = new Screen(ctx);
-  const player = new Player();
-  const keyHandler = new KeyHandler(player);
-
-  screen.drawBackground(ctx);
-  player.drawPlayer(ctx);
-
-  document.onkeydown = keyHandler.handleKeyPress;
-  document.onkeyup = keyHandler.handleKeyUp;
+  const game = new Game(ctx, canvas);
+  // const player = new Player(ctx);
+  // debugger
+  const background = new Background(ctx);
+  // const keyHandler = new KeyHandler(player);
+  // player.drawPlayer();
+  background.drawBackground();
+  game.play();
+  document.addEventListener("keypress", (e) => {
+    if (e.keyCode === 32) game.player.shoot();
+});
 })
+// window.game = game;
 
-class G_radius function(ctx) {
-    this.ctx = ctx;
-}
-
-G_radius.prototype.newGame = () => {
-  this.game = new Game();
-  this.state = {
-    paused: false,
-  }
-
-  this.startGame();
-}
-
-ctx.fillRect(0, 0, 100, 100)

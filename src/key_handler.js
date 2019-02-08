@@ -8,6 +8,7 @@ export let UP = false;
 export let DOWN = false;
 export let LEFT = false;
 export let RIGHT = false;
+export let SPACE = false;
 
 export default class KeyHandler {
   constructor(player) {
@@ -22,28 +23,22 @@ export default class KeyHandler {
 
   handleKeyPress(e) {
     e.preventDefault();
-
-
     switch (e.keyCode) {
       case KEYCODE_UP:
         UP = true;
-        // this.player.moveUp();
         break;
       case KEYCODE_DOWN:
         DOWN = true;
-        // this.player.moveDown();
         break;
       case KEYCODE_LEFT:
         LEFT = true;
-        // this.player.moveLeft();
         break;
       case KEYCODE_RIGHT:
         RIGHT = true;
-        // this.player.moveRight();
         break;
-      // case KEYCODE_SPACE:
-      //   this.player.shoot();
-      //   break;
+      case KEYCODE_SPACE:
+        SPACE = true;
+        break;
     }
   }
 
@@ -52,23 +47,19 @@ export default class KeyHandler {
     switch (e.keyCode) {
       case KEYCODE_UP:
         UP = false;
-        // this.player.moveUp();
         break;
       case KEYCODE_DOWN:
         DOWN = false;
-        // this.player.moveDown();
         break;
       case KEYCODE_LEFT:
         LEFT = false;
-        // this.player.moveLeft();
         break;
       case KEYCODE_RIGHT:
         RIGHT = false;
-        // this.player.moveRight();
         break;
-      // case KEYCODE_SPACE:
-      //   this.player.shoot();
-      //   break;
+      case KEYCODE_SPACE:
+        SPACE = false;
+        break;
     }
   }
 }

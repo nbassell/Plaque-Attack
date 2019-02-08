@@ -7,7 +7,7 @@ export default class Bullet {
   }
 
   drawBullet() {
-    this.ctx.drawImage(this.image, this.pos.x, this.pos.y, 20, 20);
+    this.ctx.drawImage(this.image, this.pos.x, this.pos.y, 25, 25);
   }
 
   update() {

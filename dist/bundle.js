@@ -137,7 +137,7 @@ class Bullet {
   }
 
   drawBullet() {
-    this.ctx.drawImage(this.image, this.pos.x, this.pos.y, 20, 20);
+    this.ctx.drawImage(this.image, this.pos.x, this.pos.y, 25, 25);
   }
 
   update() {
@@ -177,18 +177,13 @@ document.addEventListener('DOMContentLoaded', () => {
   canvas.width = W;
   canvas.height = H;
   const game = new _game__WEBPACK_IMPORTED_MODULE_1__["default"](ctx, canvas);
-  // const player = new Player(ctx);
-  // debugger
   const background = new _background__WEBPACK_IMPORTED_MODULE_2__["default"](ctx);
-  // const keyHandler = new KeyHandler(player);
-  // player.drawPlayer();
   background.drawBackground();
   game.play();
-  document.addEventListener("keypress", (e) => {
-    if (e.keyCode === 32) game.player.shoot();
-});
+//   document.addEventListener("keypress", (e) => {
+//     if (e.keyCode === 32) game.player.shoot();
+// });
 })
-// window.game = game;
 
 
 
@@ -206,18 +201,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Game; });
 /* harmony import */ var _player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./player */ "./src/player.js");
 /* harmony import */ var _background__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./background */ "./src/background.js");
+/* harmony import */ var _key_handler__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./key_handler */ "./src/key_handler.js");
+
 
 
 // import Bullet from './bullet';
 // import Column from './column';
 // import Target from './target';
-// import KeyHandler from './key_handler';
 
 class Game {
   constructor(ctx, canvas) {
     this.ctx = ctx;
     this.canvas = canvas;
     this.player = new _player__WEBPACK_IMPORTED_MODULE_0__["default"](ctx);
+    this.keyHandler = new _key_handler__WEBPACK_IMPORTED_MODULE_2__["default"](this.player);
     this.background = new _background__WEBPACK_IMPORTED_MODULE_1__["default"](ctx);
     this.play = this.play.bind(this);
     this.bullets = [];
@@ -280,6 +277,7 @@ class Game {
   render() {
     this.background.drawBackground();
     this.player.drawPlayer();
+    this.player.updatePos();
     this.bullets.forEach((bullet) => {
       bullet.drawBullet();
     })
@@ -293,7 +291,7 @@ class Game {
 /*!****************************!*\
   !*** ./src/key_handler.js ***!
   \****************************/
-/*! exports provided: UP, DOWN, LEFT, RIGHT, default */
+/*! exports provided: UP, DOWN, LEFT, RIGHT, SPACE, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -302,6 +300,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DOWN", function() { return DOWN; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LEFT", function() { return LEFT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RIGHT", function() { return RIGHT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SPACE", function() { return SPACE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return KeyHandler; });
 const KEYCODE_UP = 38,
       KEYCODE_DOWN = 40,
@@ -313,6 +312,7 @@ let UP = false;
 let DOWN = false;
 let LEFT = false;
 let RIGHT = false;
+let SPACE = false;
 
 class KeyHandler {
   constructor(player) {
@@ -327,28 +327,22 @@ class KeyHandler {
 
   handleKeyPress(e) {
     e.preventDefault();
-
-
     switch (e.keyCode) {
       case KEYCODE_UP:
         UP = true;
-        // this.player.moveUp();
         break;
       case KEYCODE_DOWN:
         DOWN = true;
-        // this.player.moveDown();
         break;
       case KEYCODE_LEFT:
         LEFT = true;
-        // this.player.moveLeft();
         break;
       case KEYCODE_RIGHT:
         RIGHT = true;
-        // this.player.moveRight();
         break;
-      // case KEYCODE_SPACE:
-      //   this.player.shoot();
-      //   break;
+      case KEYCODE_SPACE:
+        SPACE = true;
+        break;
     }
   }
 
@@ -357,23 +351,19 @@ class KeyHandler {
     switch (e.keyCode) {
       case KEYCODE_UP:
         UP = false;
-        // this.player.moveUp();
         break;
       case KEYCODE_DOWN:
         DOWN = false;
-        // this.player.moveDown();
         break;
       case KEYCODE_LEFT:
         LEFT = false;
-        // this.player.moveLeft();
         break;
       case KEYCODE_RIGHT:
         RIGHT = false;
-        // this.player.moveRight();
         break;
-      // case KEYCODE_SPACE:
-      //   this.player.shoot();
-      //   break;
+      case KEYCODE_SPACE:
+        SPACE = false;
+        break;
     }
   }
 }
@@ -392,10 +382,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Player; });
 /* harmony import */ var _bullet__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bullet */ "./src/bullet.js");
 /* harmony import */ var _key_handler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./key_handler */ "./src/key_handler.js");
-// import KeyHandler from './key_handler'
 
 
-// import Game from 
 
 //use switch case 38: case 87: etc.
 
@@ -408,12 +396,15 @@ class Player {
       x: 100, y: 250
     }
     this.size = {
-      x: 35, y: 35
+      x: 50, y: 50
     };
     this.bullet = [];
     this.shoot = this.shoot.bind(this);
-    // this.fire = [];
-    // this.speed = 3;
+    this.moveUp = this.moveUp.bind(this);
+    this.moveDown = this.moveDown.bind(this);
+    this.moveLeft = this.moveLeft.bind(this);
+    this.moveRight = this.moveRight.bind(this);
+    this.speed = 3;
   }
 
   drawPlayer() {
@@ -429,24 +420,35 @@ class Player {
   }
 
   shoot() {
-    this.bullet.push(new _bullet__WEBPACK_IMPORTED_MODULE_0__["default"]({
-      ctx: this.ctx,
-      x: this.pos.x + 20,
-      y: this.pos.y + 5,
-      dx: 8,
-      dy: 0,
-    }))
+    if (_key_handler__WEBPACK_IMPORTED_MODULE_1__["SPACE"]) {
+      this.bullet.push(new _bullet__WEBPACK_IMPORTED_MODULE_0__["default"]({
+        ctx: this.ctx,
+        x: this.pos.x + 50,
+        y: this.pos.y + 15,
+        dx: 8,
+        dy: 0,
+      }))
+    }
+  }
+
+  updatePos() {
+    this.moveUp();
+    this.moveDown();
+    this.moveLeft();
+    this.moveRight();
+    this.shoot();
   }
 
   moveUp() {
+
     if (_key_handler__WEBPACK_IMPORTED_MODULE_1__["UP"]) {
-      this.pos.y += this.speed;
+      this.pos.y -= this.speed;
     }
   }
 
   moveDown() {
     if (_key_handler__WEBPACK_IMPORTED_MODULE_1__["DOWN"]) {
-      this.pos.y -= this.speed;
+      this.pos.y += this.speed;
     }
   }
 

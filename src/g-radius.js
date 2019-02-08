@@ -13,16 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
   canvas.width = W;
   canvas.height = H;
   const game = new Game(ctx, canvas);
-  // const player = new Player(ctx);
-  // debugger
   const background = new Background(ctx);
-  // const keyHandler = new KeyHandler(player);
-  // player.drawPlayer();
   background.drawBackground();
   game.play();
-  document.addEventListener("keypress", (e) => {
-    if (e.keyCode === 32) game.player.shoot();
-});
+//   document.addEventListener("keypress", (e) => {
+//     if (e.keyCode === 32) game.player.shoot();
+// });
 })
-// window.game = game;
 

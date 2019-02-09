@@ -1,7 +1,14 @@
-// import Destructable from './destructable';
+import Destructable from './destructable';
 
-// export default class Column {
-//   constructor() {
-//     this.velocity = velocity
-//   }
-// }
+export default class Column {
+  constructor(ctx) {
+    this.speed = speed
+
+
+
+  }
+
+
+
+  
+}

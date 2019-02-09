@@ -1,7 +1,6 @@
 import Player from './player';
 import Background from './background';
 import KeyHandler from './key_handler';
-// import Bullet from './bullet';
 // import Column from './column';
 // import Target from './target';
 
@@ -35,7 +34,7 @@ export default class Game {
   // }
 
   update() {
-    //wallCollisionCheck
+    //floorCollisionCheck
     //columnCollisionCheck
     //columnOutCheck
     //targetDestroyedCheck

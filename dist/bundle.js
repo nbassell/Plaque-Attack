@@ -104,15 +104,24 @@ class Background {
   constructor(ctx) {
     this.ctx = ctx;
     this.background = new Image();
-    this.background.src = './assets/images/bloodstream-bg.jpg'
-    this.size = {
-      x: 800, y: 500
-    };
+    this.background.src = './assets/images/muscle-cells.png'
+    this.background.onload = () => {
+      this.ctx.drawImage(this.background, 0, 0, 800, 500);
+    }
+    this.scrollVal = 0;
   }
 
   drawBackground() {
-    this.ctx.clearRect(0, 0, _g_radius__WEBPACK_IMPORTED_MODULE_0__["W"], _g_radius__WEBPACK_IMPORTED_MODULE_0__["H"]);
-    this.ctx.drawImage(this.background, 0, 0, this.size.x, this.size.y);
+    // this.ctx.clearRect(0, 0, W, H);
+    if (this.scrollVal >= 800) {
+      this.scrollVal = 0;
+    }
+    this.scrollVal += 5;
+
+    this.ctx.fillStyle = '#8B1C15';
+    this.ctx.fillRect(0, 0, 800, 500);
+    this.ctx.drawImage(this.background, -this.scrollVal, 0, 800, 500);
+    this.ctx.drawImage(this.background, 800 -this.scrollVal, 0, 800, 500);
   }
 }
 
@@ -205,7 +214,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// import Bullet from './bullet';
 // import Column from './column';
 // import Target from './target';
 
@@ -239,7 +247,7 @@ class Game {
   // }
 
   update() {
-    //wallCollisionCheck
+    //floorCollisionCheck
     //columnCollisionCheck
     //columnOutCheck
     //targetDestroyedCheck
@@ -385,29 +393,36 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-//use switch case 38: case 87: etc.
 
 class Player {
   constructor(ctx) {
     this.ctx = ctx;
     this.image = new Image();
     this.image.src = './assets/images/white-blood-cell.png';
+
     this.pos = {
-      x: 100, y: 250
+      x: 500, y: 220
     }
     this.size = {
       x: 50, y: 50
     };
+
     this.bullet = [];
     this.shoot = this.shoot.bind(this);
     this.moveUp = this.moveUp.bind(this);
     this.moveDown = this.moveDown.bind(this);
     this.moveLeft = this.moveLeft.bind(this);
     this.moveRight = this.moveRight.bind(this);
-    this.speed = 3;
+    this.speed = 4;
+
+    this.playerHitbox = {
+      x: this.pos.x + this.size.x,
+      y: this.pos.y + this.size.y,
+    }
   }
 
   drawPlayer() {
+    // this.ctx.clearRect(0, 0, 800, 500);
     this.ctx.drawImage(this.image, this.pos.x, this.pos.y, this.size.x, this.size.y);
     this.bullet.forEach((b, i) => {
       b.drawBullet();
@@ -440,7 +455,6 @@ class Player {
   }
 
   moveUp() {
-
     if (_key_handler__WEBPACK_IMPORTED_MODULE_1__["UP"]) {
       this.pos.y -= this.speed;
     }
@@ -461,6 +475,12 @@ class Player {
   moveRight() {
     if (_key_handler__WEBPACK_IMPORTED_MODULE_1__["RIGHT"]) {
       this.pos.x += this.speed;
+    } else {
+      if (this.pos.x === 0) {
+        this.pos.x;
+      } else {
+        this.pos.x -= this.speed;
+      }
     }
   }
 }

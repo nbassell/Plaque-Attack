@@ -8,22 +8,15 @@ export default class Player {
     this.image = new Image();
     this.image.src = './assets/images/white-blood-cell.png';
 
-    this.pos = {
-      x: 500, y: 220
-    }
-    this.size = {
-      x: 50, y: 50
-    };
+    this.pos = { x: 500, y: 220 };
+    this.size = { x: 50, y: 50 };
 
     this.bullet = [];
+    this.fireable = true;
     this.shoot = this.shoot.bind(this);
-    this.moveUp = this.moveUp.bind(this);
-    this.moveDown = this.moveDown.bind(this);
-    this.moveLeft = this.moveLeft.bind(this);
-    this.moveRight = this.moveRight.bind(this);
     this.speed = 4;
 
-    this.playerHitbox = {
+    this.playerHurtbox = {
       x: this.pos.x + this.size.x,
       y: this.pos.y + this.size.y,
     }
@@ -43,14 +36,16 @@ export default class Player {
   }
 
   shoot() {
-    if (SPACE) {
+    if (SPACE && this.fireable) {
       this.bullet.push(new Bullet({
         ctx: this.ctx,
         x: this.pos.x + 50,
         y: this.pos.y + 15,
         dx: 8,
         dy: 0,
-      }))
+      }));
+      this.fireable = false;
+      setTimeout(() => { this.fireable = true }, 250);
     }
   }
 
@@ -63,19 +58,19 @@ export default class Player {
   }
 
   moveUp() {
-    if (UP) {
+    if (UP && this.pos.y > 0) {
       this.pos.y -= this.speed;
     }
   }
 
   moveDown() {
-    if (DOWN) {
+    if (DOWN && (this.pos.y + this.size.y) < 498) {
       this.pos.y += this.speed;
     }
   }
 
   moveLeft() {
-    if (LEFT) {
+    if (LEFT && this.pos.x > 0) {
       this.pos.x -= this.speed;
     }
   }

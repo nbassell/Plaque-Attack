@@ -104,7 +104,7 @@ class Background {
   constructor(ctx) {
     this.ctx = ctx;
     this.background = new Image();
-    this.background.src = './assets/images/muscle-cells.png'
+    this.background.src = './assets/images/muscle-cells.png';
     this.background.onload = () => {
       this.ctx.drawImage(this.background, 0, 0, 800, 500);
     }
@@ -141,7 +141,7 @@ class Bullet {
   constructor({ctx, x, y, dx, dy}) {
     this.ctx = ctx;
     this.image = new Image();
-    this.image.src = './assets/images/bullet.png'
+    this.image.src = './assets/images/bullet.png';
     this.pos = { x, y, dx, dy };
   }
 
@@ -153,6 +153,106 @@ class Bullet {
     this.pos.x += this.pos.dx;
     this.pos.y += this.pos.dy;
   }
+}
+
+/***/ }),
+
+/***/ "./src/column.js":
+/*!***********************!*\
+  !*** ./src/column.js ***!
+  \***********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Column; });
+/* harmony import */ var _column_section__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./column_section */ "./src/column_section.js");
+/* harmony import */ var _destructible_section__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./destructible_section */ "./src/destructible_section.js");
+
+
+
+class Column {
+  constructor(ctx) {
+    this.ctx = ctx;
+    this.speed = 5;
+    this.sections = [];
+    // this.columnSection = new ColumnSection(ctx);
+    // this.destructibleSection = new DestructibleSection(ctx);
+    this.destructibleIdx = null;
+  }
+
+  drawColumn() {
+    let destructibleIdx = Math.floor(Math.random() * 5);
+    let i = 0;
+    while (i < 5) {
+      if (i === destructibleIdx) {
+        this.sections.push(new _destructible_section__WEBPACK_IMPORTED_MODULE_1__["default"](this.ctx, i));
+        i++;
+      } else {
+        this.sections.push(new _column_section__WEBPACK_IMPORTED_MODULE_0__["default"](this.ctx, i));
+        i++;
+      }
+    }  
+  }
+}
+
+
+
+
+/***/ }),
+
+/***/ "./src/column_section.js":
+/*!*******************************!*\
+  !*** ./src/column_section.js ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ColumnSection; });
+// import Column from './column';
+
+class ColumnSection {
+  constructor(ctx, idx) {
+    this.ctx = ctx;
+    this.idx = idx;
+    this.image = new Image();
+    this.image.src = './assets/images/artery-wall.png';
+    this.pos = { x: 810, y: (this.idx * 100) }
+    this.size = { x: 75, y: 100 };
+    // this.ctx.fillStyle = 'red';
+    // this.ctx.fillRect(0, 0, 75, 100)
+  }
+}
+
+/***/ }),
+
+/***/ "./src/destructible_section.js":
+/*!*************************************!*\
+  !*** ./src/destructible_section.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return DestructibleSection; });
+// import Column from './column';
+
+class DestructibleSection {
+  constructor(ctx, idx) {
+    this.ctx = ctx;
+    this.idx = idx;
+    this.image = new Image();
+    this.image.src = './assets/images/plaque-in-artery.png';
+    this.pos = { x: 810, y: (this.idx * 100) }
+    this.size = { x: 75, y: 100 };
+  }
+
+  // drawDestructibleSection() {
+  // }
 }
 
 /***/ }),
@@ -211,11 +311,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./player */ "./src/player.js");
 /* harmony import */ var _background__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./background */ "./src/background.js");
 /* harmony import */ var _key_handler__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./key_handler */ "./src/key_handler.js");
+/* harmony import */ var _column__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./column */ "./src/column.js");
 
 
 
-// import Column from './column';
-// import Target from './target';
+
 
 class Game {
   constructor(ctx, canvas) {
@@ -226,6 +326,8 @@ class Game {
     this.background = new _background__WEBPACK_IMPORTED_MODULE_1__["default"](ctx);
     this.play = this.play.bind(this);
     this.bullets = [];
+    this.columns = [];
+    this.timer = 0;
     //spawn rate
     //columns
     //score
@@ -247,19 +349,21 @@ class Game {
   // }
 
   update() {
-    //floorCollisionCheck
+    this.timer++;
+    this.spawnColumn();
     //columnCollisionCheck
     //columnOutCheck
     //targetDestroyedCheck
-    //createColumn
   }
   
   togglePause() {
     this.paused = false ? undefined : this.paused = false;
   }
   
-  createColumn() {
-    
+  spawnColumn() {
+    if (this.timer % 300 === 0) {
+      this.columns.push(new _column__WEBPACK_IMPORTED_MODULE_3__["default"](this.ctx));
+    }
   }
 
   targetDestroyedCheck() {
@@ -278,7 +382,9 @@ class Game {
   }
 
   play() {
+    debugger
     this.render();
+    this.update();
     this.requestAnimFrame()(this.play.bind(this));
   }
 
@@ -288,6 +394,9 @@ class Game {
     this.player.updatePos();
     this.bullets.forEach((bullet) => {
       bullet.drawBullet();
+    });
+    this.columns.forEach((column) => {
+      column.drawColumn();
     })
   }
 
@@ -400,22 +509,15 @@ class Player {
     this.image = new Image();
     this.image.src = './assets/images/white-blood-cell.png';
 
-    this.pos = {
-      x: 500, y: 220
-    }
-    this.size = {
-      x: 50, y: 50
-    };
+    this.pos = { x: 500, y: 220 };
+    this.size = { x: 50, y: 50 };
 
     this.bullet = [];
+    this.fireable = true;
     this.shoot = this.shoot.bind(this);
-    this.moveUp = this.moveUp.bind(this);
-    this.moveDown = this.moveDown.bind(this);
-    this.moveLeft = this.moveLeft.bind(this);
-    this.moveRight = this.moveRight.bind(this);
     this.speed = 4;
 
-    this.playerHitbox = {
+    this.playerHurtbox = {
       x: this.pos.x + this.size.x,
       y: this.pos.y + this.size.y,
     }
@@ -435,14 +537,16 @@ class Player {
   }
 
   shoot() {
-    if (_key_handler__WEBPACK_IMPORTED_MODULE_1__["SPACE"]) {
+    if (_key_handler__WEBPACK_IMPORTED_MODULE_1__["SPACE"] && this.fireable) {
       this.bullet.push(new _bullet__WEBPACK_IMPORTED_MODULE_0__["default"]({
         ctx: this.ctx,
         x: this.pos.x + 50,
         y: this.pos.y + 15,
         dx: 8,
         dy: 0,
-      }))
+      }));
+      this.fireable = false;
+      setTimeout(() => { this.fireable = true }, 250);
     }
   }
 
@@ -455,19 +559,19 @@ class Player {
   }
 
   moveUp() {
-    if (_key_handler__WEBPACK_IMPORTED_MODULE_1__["UP"]) {
+    if (_key_handler__WEBPACK_IMPORTED_MODULE_1__["UP"] && this.pos.y > 0) {
       this.pos.y -= this.speed;
     }
   }
 
   moveDown() {
-    if (_key_handler__WEBPACK_IMPORTED_MODULE_1__["DOWN"]) {
+    if (_key_handler__WEBPACK_IMPORTED_MODULE_1__["DOWN"] && (this.pos.y + this.size.y) < 498) {
       this.pos.y += this.speed;
     }
   }
 
   moveLeft() {
-    if (_key_handler__WEBPACK_IMPORTED_MODULE_1__["LEFT"]) {
+    if (_key_handler__WEBPACK_IMPORTED_MODULE_1__["LEFT"] && this.pos.x > 0) {
       this.pos.x -= this.speed;
     }
   }

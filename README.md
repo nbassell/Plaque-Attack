@@ -14,7 +14,7 @@ For this project, I expect to utilize sprites from https://www.spriters-resource
 * `Board` to render the board
 * `Player` for the player-controlled circle
 * `Column` for the obstacles
-* `Target` for the destructable column segments
+* `Target` for the destructible column segments
 * `Bullet` for shots fired by the player
 
 ## Playing the Game

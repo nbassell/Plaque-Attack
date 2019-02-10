@@ -5,7 +5,7 @@ export default class Background {
   constructor(ctx) {
     this.ctx = ctx;
     this.background = new Image();
-    this.background.src = './assets/images/muscle-cells.png'
+    this.background.src = './assets/images/muscle-cells.png';
     this.background.onload = () => {
       this.ctx.drawImage(this.background, 0, 0, 800, 500);
     }

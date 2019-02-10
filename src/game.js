@@ -1,8 +1,7 @@
 import Player from './player';
 import Background from './background';
 import KeyHandler from './key_handler';
-// import Column from './column';
-// import Target from './target';
+import Column from './column';
 
 export default class Game {
   constructor(ctx, canvas) {
@@ -13,6 +12,8 @@ export default class Game {
     this.background = new Background(ctx);
     this.play = this.play.bind(this);
     this.bullets = [];
+    this.columns = [];
+    this.timer = 0;
     //spawn rate
     //columns
     //score
@@ -34,19 +35,21 @@ export default class Game {
   // }
 
   update() {
-    //floorCollisionCheck
+    this.timer++;
+    this.spawnColumn();
     //columnCollisionCheck
     //columnOutCheck
     //targetDestroyedCheck
-    //createColumn
   }
   
   togglePause() {
     this.paused = false ? this.paused = true : this.paused = false;
   }
   
-  createColumn() {
-    
+  spawnColumn() {
+    if (this.timer % 300 === 0) {
+      this.columns.push(new Column(this.ctx));
+    }
   }
 
   targetDestroyedCheck() {
@@ -65,7 +68,9 @@ export default class Game {
   }
 
   play() {
+    debugger
     this.render();
+    this.update();
     this.requestAnimFrame()(this.play.bind(this));
   }
 
@@ -75,6 +80,9 @@ export default class Game {
     this.player.updatePos();
     this.bullets.forEach((bullet) => {
       bullet.drawBullet();
+    });
+    this.columns.forEach((column) => {
+      column.drawColumn();
     })
   }
 

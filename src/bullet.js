@@ -2,7 +2,7 @@ export default class Bullet {
   constructor({ctx, x, y, dx, dy}) {
     this.ctx = ctx;
     this.image = new Image();
-    this.image.src = './assets/images/bullet.png'
+    this.image.src = './assets/images/bullet.png';
     this.pos = { x, y, dx, dy };
   }
 

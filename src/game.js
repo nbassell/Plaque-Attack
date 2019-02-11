@@ -37,6 +37,7 @@ export default class Game {
   update() {
     this.timer++;
     this.spawnColumn();
+    //bulletCollisionCheck
     //columnCollisionCheck
     //columnOutCheck
     //targetDestroyedCheck
@@ -47,9 +48,13 @@ export default class Game {
   }
   
   spawnColumn() {
-    if (this.timer % 300 === 0) {
+    if (this.timer % 100 === 0) {
       this.columns.push(new Column(this.ctx));
     }
+  }
+
+  columnCollisionCheck() {
+    
   }
 
   targetDestroyedCheck() {
@@ -69,8 +74,8 @@ export default class Game {
 
   play() {
     debugger
-    this.render();
     this.update();
+    this.render();
     this.requestAnimFrame()(this.play.bind(this));
   }
 
@@ -85,5 +90,4 @@ export default class Game {
       column.drawColumn();
     })
   }
-
 }

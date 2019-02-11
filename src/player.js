@@ -14,7 +14,8 @@ export default class Player {
     this.bullet = [];
     this.fireable = true;
     this.shoot = this.shoot.bind(this);
-    this.speed = 4;
+    this.xVel = 4;
+    this.yVel = 6;
 
     this.playerHurtbox = {
       x: this.pos.x + this.size.x,
@@ -59,30 +60,30 @@ export default class Player {
 
   moveUp() {
     if (UP && this.pos.y > 0) {
-      this.pos.y -= this.speed;
+      this.pos.y -= this.yVel;
     }
   }
 
   moveDown() {
     if (DOWN && (this.pos.y + this.size.y) < 498) {
-      this.pos.y += this.speed;
+      this.pos.y += this.yVel;
     }
   }
 
   moveLeft() {
     if (LEFT && this.pos.x > 0) {
-      this.pos.x -= this.speed;
+      this.pos.x -= this.xVel;
     }
   }
 
   moveRight() {
     if (RIGHT) {
-      this.pos.x += this.speed;
+      this.pos.x += this.xVel;
     } else {
       if (this.pos.x === 0) {
         this.pos.x;
       } else {
-        this.pos.x -= this.speed;
+        this.pos.x -= this.xVel;
       }
     }
   }

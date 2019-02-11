@@ -1,15 +1,14 @@
-// import Column from './column';
+import ColumnSection from './column_section';
 
-export default class DestructibleSection {
+export default class DestructibleSection extends ColumnSection {
   constructor(ctx, idx) {
-    this.ctx = ctx;
-    this.idx = idx;
+    super(ctx, idx)
     this.image = new Image();
     this.image.src = './assets/images/plaque-in-artery.png';
-    this.pos = { x: 810, y: (this.idx * 100) }
-    this.size = { x: 75, y: 100 };
   }
 
-  // drawDestructibleSection() {
+  // drawSection() {
+  //   this.pos.x -= 5;
+  //   this.ctx.drawImage(this.image, this.pos.x, this.pos.y, this.size.x, this.size.y);
   // }
 }

@@ -176,24 +176,31 @@ class Column {
   constructor(ctx) {
     this.ctx = ctx;
     this.speed = 5;
-    this.sections = [];
+    this.sections = this.setColumn();
     // this.columnSection = new ColumnSection(ctx);
     // this.destructibleSection = new DestructibleSection(ctx);
     this.destructibleIdx = null;
   }
 
-  drawColumn() {
+  setColumn() {
     let destructibleIdx = Math.floor(Math.random() * 5);
+    let sections = [];
     let i = 0;
     while (i < 5) {
       if (i === destructibleIdx) {
-        this.sections.push(new _destructible_section__WEBPACK_IMPORTED_MODULE_1__["default"](this.ctx, i));
-        i++;
+        sections.push(new _destructible_section__WEBPACK_IMPORTED_MODULE_1__["default"](this.ctx, i));
       } else {
-        this.sections.push(new _column_section__WEBPACK_IMPORTED_MODULE_0__["default"](this.ctx, i));
-        i++;
+        sections.push(new _column_section__WEBPACK_IMPORTED_MODULE_0__["default"](this.ctx, i));
       }
-    }  
+      i++;
+    }
+    return sections;
+  }
+
+  drawColumn() {
+    this.sections.forEach((section) => {
+      section.drawSection();    
+    })
   }
 }
 
@@ -222,8 +229,11 @@ class ColumnSection {
     this.image.src = './assets/images/artery-wall.png';
     this.pos = { x: 810, y: (this.idx * 100) }
     this.size = { x: 75, y: 100 };
-    // this.ctx.fillStyle = 'red';
-    // this.ctx.fillRect(0, 0, 75, 100)
+  }
+
+  drawSection() {
+    this.pos.x -= 5;
+    this.ctx.drawImage(this.image, this.pos.x, this.pos.y, this.size.x, this.size.y);
   }
 }
 
@@ -239,19 +249,19 @@ class ColumnSection {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return DestructibleSection; });
-// import Column from './column';
+/* harmony import */ var _column_section__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./column_section */ "./src/column_section.js");
 
-class DestructibleSection {
+
+class DestructibleSection extends _column_section__WEBPACK_IMPORTED_MODULE_0__["default"] {
   constructor(ctx, idx) {
-    this.ctx = ctx;
-    this.idx = idx;
+    super(ctx, idx)
     this.image = new Image();
     this.image.src = './assets/images/plaque-in-artery.png';
-    this.pos = { x: 810, y: (this.idx * 100) }
-    this.size = { x: 75, y: 100 };
   }
 
-  // drawDestructibleSection() {
+  // drawSection() {
+  //   this.pos.x -= 5;
+  //   this.ctx.drawImage(this.image, this.pos.x, this.pos.y, this.size.x, this.size.y);
   // }
 }
 
@@ -351,6 +361,7 @@ class Game {
   update() {
     this.timer++;
     this.spawnColumn();
+    //bulletCollisionCheck
     //columnCollisionCheck
     //columnOutCheck
     //targetDestroyedCheck
@@ -361,9 +372,13 @@ class Game {
   }
   
   spawnColumn() {
-    if (this.timer % 300 === 0) {
+    if (this.timer % 100 === 0) {
       this.columns.push(new _column__WEBPACK_IMPORTED_MODULE_3__["default"](this.ctx));
     }
+  }
+
+  columnCollisionCheck() {
+    
   }
 
   targetDestroyedCheck() {
@@ -383,8 +398,8 @@ class Game {
 
   play() {
     debugger
-    this.render();
     this.update();
+    this.render();
     this.requestAnimFrame()(this.play.bind(this));
   }
 
@@ -399,7 +414,6 @@ class Game {
       column.drawColumn();
     })
   }
-
 }
 
 /***/ }),
@@ -515,7 +529,8 @@ class Player {
     this.bullet = [];
     this.fireable = true;
     this.shoot = this.shoot.bind(this);
-    this.speed = 4;
+    this.xVel = 4;
+    this.yVel = 6;
 
     this.playerHurtbox = {
       x: this.pos.x + this.size.x,
@@ -560,30 +575,30 @@ class Player {
 
   moveUp() {
     if (_key_handler__WEBPACK_IMPORTED_MODULE_1__["UP"] && this.pos.y > 0) {
-      this.pos.y -= this.speed;
+      this.pos.y -= this.yVel;
     }
   }
 
   moveDown() {
     if (_key_handler__WEBPACK_IMPORTED_MODULE_1__["DOWN"] && (this.pos.y + this.size.y) < 498) {
-      this.pos.y += this.speed;
+      this.pos.y += this.yVel;
     }
   }
 
   moveLeft() {
     if (_key_handler__WEBPACK_IMPORTED_MODULE_1__["LEFT"] && this.pos.x > 0) {
-      this.pos.x -= this.speed;
+      this.pos.x -= this.xVel;
     }
   }
 
   moveRight() {
     if (_key_handler__WEBPACK_IMPORTED_MODULE_1__["RIGHT"]) {
-      this.pos.x += this.speed;
+      this.pos.x += this.xVel;
     } else {
       if (this.pos.x === 0) {
         this.pos.x;
       } else {
-        this.pos.x -= this.speed;
+        this.pos.x -= this.xVel;
       }
     }
   }

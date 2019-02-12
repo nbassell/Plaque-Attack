@@ -181,7 +181,7 @@ class Column {
     // this.destructibleSection = new DestructibleSection(ctx);
     this.destructibleIdx = null;
   }
-
+  
   setColumn() {
     let destructibleIdx = Math.floor(Math.random() * 5);
     let sections = [];
@@ -199,7 +199,9 @@ class Column {
 
   drawColumn() {
     this.sections.forEach((section) => {
-      section.drawSection();    
+      if (section !== null) {
+        section.drawSection();    
+      }
     })
   }
 }
@@ -257,12 +259,49 @@ class DestructibleSection extends _column_section__WEBPACK_IMPORTED_MODULE_0__["
     super(ctx, idx)
     this.image = new Image();
     this.image.src = './assets/images/plaque-in-artery.png';
+    this.health = 3;
   }
+
+  // isHit() {
+  //   this.health -= 1;
+  //   if (this.health <= 0) {
+      
+  //   }
+  // }
 
   // drawSection() {
   //   this.pos.x -= 5;
   //   this.ctx.drawImage(this.image, this.pos.x, this.pos.y, this.size.x, this.size.y);
   // }
+}
+
+/***/ }),
+
+/***/ "./src/empty_section.js":
+/*!******************************!*\
+  !*** ./src/empty_section.js ***!
+  \******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return EmptySection; });
+class EmptySection {
+  constructor(ctx, idx) {
+    this.ctx = ctx;
+    this.idx = idx;
+    this.image = new Image();
+    this.image.src = './assets/images/artery-wall.png';
+    this.pos = { x: 810, y: (this.idx * 100) }
+    this.size = { x: 0, y: 0 };
+  }
+
+  drawSection() {
+    // this.pos.x -= 5;
+    // this.ctx.drawImage(this.image, this.pos.x, this.pos.y, this.size.x, this.size.y);
+    
+  }
 }
 
 /***/ }),
@@ -322,6 +361,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _background__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./background */ "./src/background.js");
 /* harmony import */ var _key_handler__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./key_handler */ "./src/key_handler.js");
 /* harmony import */ var _column__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./column */ "./src/column.js");
+/* harmony import */ var _destructible_section__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./destructible_section */ "./src/destructible_section.js");
+/* harmony import */ var _empty_section__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./empty_section */ "./src/empty_section.js");
+
+
 
 
 
@@ -335,6 +378,8 @@ class Game {
     this.keyHandler = new _key_handler__WEBPACK_IMPORTED_MODULE_2__["default"](this.player);
     this.background = new _background__WEBPACK_IMPORTED_MODULE_1__["default"](ctx);
     this.play = this.play.bind(this);
+    this.columnCollisionCheck = this.columnCollisionCheck.bind(this);
+    this.bulletCollisionCheck = this.bulletCollisionCheck.bind(this);
     this.bullets = [];
     this.columns = [];
     this.timer = 0;
@@ -361,10 +406,10 @@ class Game {
   update() {
     this.timer++;
     this.spawnColumn();
-    //bulletCollisionCheck
-    //columnCollisionCheck
-    //columnOutCheck
-    //targetDestroyedCheck
+    this.columnCollisionCheck();
+    this.bulletCollisionCheck();
+    //this.targetDestroyedCheck
+    //this.columnOutCheck
   }
   
   togglePause() {
@@ -378,7 +423,46 @@ class Game {
   }
 
   columnCollisionCheck() {
-    
+    this.columns.forEach((column) => {
+      column.sections.forEach((section) => {
+        if (Math.abs(section.pos.x - this.player.pos.x) < 53
+            && Math.abs(section.pos.y - this.player.pos.y) < 53) {
+              this.gameOver();
+            }
+      });
+    })
+  }
+
+  bulletCollisionCheck() {
+    this.columns.forEach((column, i) => {
+      column.sections.forEach((section, j) => {
+        this.player.bullets.forEach((bullet, k) => {
+          if (Math.abs(section.pos.x - bullet.pos.x) < 25
+              && Math.abs((section.pos.y + 100) > (bullet.pos.y + 13))
+              && Math.abs((section.pos.y < bullet.pos.y + 13)) )
+            {
+              if (section.health) {
+                // debugger
+                section.health -=1;
+                if (section.health <= 0) {
+                  // debugger
+                  // this.columns[i].sections[j].splice(j, 1);
+                  this.columns[i].sections[j] = new _empty_section__WEBPACK_IMPORTED_MODULE_5__["default"];
+                  debugger
+                }
+              }
+            this.player.bullets.splice(k, 1);
+          }
+        })
+      })
+    })
+  }
+  //bullet must be between section.pos.y and section.pos.y + 100
+  //which means section.pos.y < bullet.y + 13 < section.pos.y + 100
+  //if j = column.destructibleIdx => health -1, if health === 0 splice section
+
+  gameOver() {
+    alert("YOU LOSE!")
   }
 
   targetDestroyedCheck() {
@@ -397,7 +481,6 @@ class Game {
   }
 
   play() {
-    debugger
     this.update();
     this.render();
     this.requestAnimFrame()(this.play.bind(this));
@@ -526,7 +609,7 @@ class Player {
     this.pos = { x: 500, y: 220 };
     this.size = { x: 50, y: 50 };
 
-    this.bullet = [];
+    this.bullets = [];
     this.fireable = true;
     this.shoot = this.shoot.bind(this);
     this.xVel = 4;
@@ -541,10 +624,10 @@ class Player {
   drawPlayer() {
     // this.ctx.clearRect(0, 0, 800, 500);
     this.ctx.drawImage(this.image, this.pos.x, this.pos.y, this.size.x, this.size.y);
-    this.bullet.forEach((b, i) => {
+    this.bullets.forEach((b, i) => {
       b.drawBullet();
       if (b.pos.x > 800) {
-        this.bullet.splice(i, 1);
+        this.bullets.splice(i, 1);
       } else {
         b.update();
       }
@@ -553,7 +636,7 @@ class Player {
 
   shoot() {
     if (_key_handler__WEBPACK_IMPORTED_MODULE_1__["SPACE"] && this.fireable) {
-      this.bullet.push(new _bullet__WEBPACK_IMPORTED_MODULE_0__["default"]({
+      this.bullets.push(new _bullet__WEBPACK_IMPORTED_MODULE_0__["default"]({
         ctx: this.ctx,
         x: this.pos.x + 50,
         y: this.pos.y + 15,

@@ -10,7 +10,7 @@ export default class Column {
     // this.destructibleSection = new DestructibleSection(ctx);
     this.destructibleIdx = null;
   }
-
+  
   setColumn() {
     let destructibleIdx = Math.floor(Math.random() * 5);
     let sections = [];
@@ -28,7 +28,9 @@ export default class Column {
 
   drawColumn() {
     this.sections.forEach((section) => {
-      section.drawSection();    
+      if (section !== null) {
+        section.drawSection();    
+      }
     })
   }
 }

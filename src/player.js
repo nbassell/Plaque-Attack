@@ -11,7 +11,7 @@ export default class Player {
     this.pos = { x: 500, y: 220 };
     this.size = { x: 50, y: 50 };
 
-    this.bullet = [];
+    this.bullets = [];
     this.fireable = true;
     this.shoot = this.shoot.bind(this);
     this.xVel = 4;
@@ -26,10 +26,10 @@ export default class Player {
   drawPlayer() {
     // this.ctx.clearRect(0, 0, 800, 500);
     this.ctx.drawImage(this.image, this.pos.x, this.pos.y, this.size.x, this.size.y);
-    this.bullet.forEach((b, i) => {
+    this.bullets.forEach((b, i) => {
       b.drawBullet();
       if (b.pos.x > 800) {
-        this.bullet.splice(i, 1);
+        this.bullets.splice(i, 1);
       } else {
         b.update();
       }
@@ -38,7 +38,7 @@ export default class Player {
 
   shoot() {
     if (SPACE && this.fireable) {
-      this.bullet.push(new Bullet({
+      this.bullets.push(new Bullet({
         ctx: this.ctx,
         x: this.pos.x + 50,
         y: this.pos.y + 15,

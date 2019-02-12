@@ -1,22 +1,22 @@
 import ColumnSection from './column-section';
 import Player from './player';
-import 
+import Bullet from './bullet';
 
 /* Source and target objects contain x, y and width, height */
-  sectionCollided(source, target) {
+  export function sectionCollided(player, section) {
     return !(
-      ( ( source.y + source.height ) < ( target.y ) ) ||
-      ( source.y > ( target.y + target.height ) ) ||
-      ( ( source.x + source.width ) < target.x ) ||
-      ( source.x > ( target.x + target.width ) )
+      ( ( player.y + player.height ) < ( section.y ) ) ||
+      ( player.y > ( section.y + section.height ) ) ||
+      ( ( player.x + player.width ) < section.x ) ||
+      ( player.x > ( section.x + section.width ) )
     );
   }
 
-  targetCollided(source, target) {
+  export function bulletCollided(bullet, section) {
     return !(
-      ( ( source.y + source.height ) < ( target.y ) ) ||
-      ( source.y > ( target.y + target.height ) ) ||
-      ( ( source.x + source.width ) < target.x ) ||
-      ( source.x > ( target.x + target.width ) )
+      ( ( bullet.y + bullet.height ) < ( section.y ) ) ||
+      ( bullet.y > ( section.y + section.height ) ) ||
+      ( ( bullet.x + bullet.width ) < section.x ) ||
+      ( bullet.x > ( section.x + section.width ) )
     );
   }

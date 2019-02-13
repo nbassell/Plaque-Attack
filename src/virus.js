@@ -17,14 +17,4 @@ export default class Virus {
     this.pos.y += this.yVel;
     this.ctx.drawImage(this.image, this.pos.x, this.pos.y, this.size.x, this.size.y);
   }
-
-
-  swapXDirection() {
-    this.xVel *= -1;
-  }
-
-  swapYDirection() {
-    debugger
-    this.yVel *= -1;
-  }
 }

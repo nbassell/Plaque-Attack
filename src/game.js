@@ -101,28 +101,25 @@ export default class Game {
   virusWallCheck() {
     this.columns.forEach((column) => {
       this.viruses.forEach((virus) => {
-        debugger
-        if (Util.isCollided(virus, column)) {
+        if (Util.isCollidedLeft(virus, column) && virus.xVel < 0) {
           debugger
-          virus.swapXDirection();
+          virus.xVel = Math.abs(virus.xVel);
+          debugger
+        }
+        if (Util.isCollidedRight(virus, column) && virus.xVel > 0) {
+          virus.xVel = Math.abs(virus.xVel) * -1;
         }
         if ((virus.pos.x + virus.size.x >= 800) && virus.xVel > 0) {
           virus.xVel = Math.abs(virus.xVel) * -1;
         }
-        // column.sections.forEach((section) => {
-        //   if (Util.isCollided(virus, section) || virus.pos.x >= 800) {
-        //     virus.swapXDirection();
-        //   }
         if (virus.pos.y <= 0) {
           virus.yVel = Math.abs(virus.yVel);
         }
         if ((virus.pos.y + virus.size.y) >= 499) {
           virus.yVel = Math.abs(virus.yVel) * -1;
-          // virus.swapYDirection();
         }
       })
     })
-    // })
   }
 
   columnOutCheck() {

@@ -198,7 +198,9 @@ class Column {
   }
 
   drawColumn() {
-    this.pos = { x: this.sections[0].pos.x };
+    this.pos = { 
+      x: this.sections[0].pos.x < 850 ? this.sections[0].pos.x : this.sections[1].pos.x };
+    console.log(this.pos.x)
     this.sections.forEach((section) => {
       if (section !== null) {
         section.drawSection();    
@@ -294,14 +296,14 @@ class EmptySection {
     this.idx = idx;
     this.image = new Image();
     this.image.src = './assets/images/artery-wall.png';
-    this.pos = { x: 810, y: (this.idx * 100) }
+    this.pos = { x: 850, y: (this.idx * 100) }
     this.size = { x: 0, y: 0 };
   }
 
   drawSection() {
     // this.pos.x -= 5;
     // this.ctx.drawImage(this.image, this.pos.x, this.pos.y, this.size.x, this.size.y);
-    
+
   }
 }
 
@@ -468,28 +470,25 @@ class Game {
   virusWallCheck() {
     this.columns.forEach((column) => {
       this.viruses.forEach((virus) => {
-        debugger
-        if (_util__WEBPACK_IMPORTED_MODULE_6__["default"].isCollided(virus, column)) {
+        if (_util__WEBPACK_IMPORTED_MODULE_6__["default"].isCollidedLeft(virus, column) && virus.xVel < 0) {
           debugger
-          virus.swapXDirection();
+          virus.xVel = Math.abs(virus.xVel);
+          debugger
+        }
+        if (_util__WEBPACK_IMPORTED_MODULE_6__["default"].isCollidedRight(virus, column) && virus.xVel > 0) {
+          virus.xVel = Math.abs(virus.xVel) * -1;
         }
         if ((virus.pos.x + virus.size.x >= 800) && virus.xVel > 0) {
           virus.xVel = Math.abs(virus.xVel) * -1;
         }
-        // column.sections.forEach((section) => {
-        //   if (Util.isCollided(virus, section) || virus.pos.x >= 800) {
-        //     virus.swapXDirection();
-        //   }
         if (virus.pos.y <= 0) {
           virus.yVel = Math.abs(virus.yVel);
         }
         if ((virus.pos.y + virus.size.y) >= 499) {
           virus.yVel = Math.abs(virus.yVel) * -1;
-          // virus.swapYDirection();
         }
       })
     })
-    // })
   }
 
   columnOutCheck() {
@@ -752,6 +751,27 @@ const Util = {
       ( ( source.pos.x + source.size.x ) < target.pos.x ) ||
       ( source.pos.x > ( target.pos.x + target.size.x ) )
     );
+  },
+
+  isCollidedLeft(source, target) {
+    return (
+      ( ( target.pos.x + target.size.x ) >= source.pos.x ) &&
+      ( ( target.pos.x + target.size.x ) < source.pos.x + source.size.x)
+    );
+  },
+
+  isCollidedRight(source, target) {
+    return (
+      ( ( target.pos.x ) <= source.pos.x + source.size.x) &&
+      ( ( target.pos.x ) > source.pos.x )
+    );
+  },
+
+  isCollidedY(source, target) {
+    return !(
+      ( ( source.pos.y + source.size.y ) < ( target.pos.y ) ) ||
+      ( source.pos.y > ( target.pos.y + target.size.y ) )
+    );
   }
 }
 
@@ -812,16 +832,6 @@ class Virus {
     this.pos.x += this.xVel;
     this.pos.y += this.yVel;
     this.ctx.drawImage(this.image, this.pos.x, this.pos.y, this.size.x, this.size.y);
-  }
-
-
-  swapXDirection() {
-    this.xVel *= -1;
-  }
-
-  swapYDirection() {
-    debugger
-    this.yVel *= -1;
   }
 }
 

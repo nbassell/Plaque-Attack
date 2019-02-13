@@ -6,7 +6,7 @@ export default class Player {
   constructor(ctx) {
     this.ctx = ctx;
     this.image = new Image();
-    this.image.src = './assets/images/white-blood-cell.png';
+    this.image.src = './assets/images/drix.png';
 
     this.pos = { x: 500, y: 220 };
     this.size = { x: 50, y: 50 };
@@ -17,14 +17,13 @@ export default class Player {
     this.xVel = 4;
     this.yVel = 6;
 
-    this.playerHurtbox = {
-      x: this.pos.x + this.size.x,
-      y: this.pos.y + this.size.y,
-    }
+    // this.playerHurtbox = {
+    //   x: this.pos.x + this.size.x,
+    //   y: this.pos.y + this.size.y,
+    // }
   }
 
   drawPlayer() {
-    // this.ctx.clearRect(0, 0, 800, 500);
     this.ctx.drawImage(this.image, this.pos.x, this.pos.y, this.size.x, this.size.y);
     this.bullets.forEach((b, i) => {
       b.drawBullet();
@@ -46,7 +45,7 @@ export default class Player {
         dy: 0,
       }));
       this.fireable = false;
-      setTimeout(() => { this.fireable = true }, 250);
+      setTimeout(() => { this.fireable = true }, 170);
     }
   }
 

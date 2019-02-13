@@ -4,10 +4,11 @@ export default class Bullet {
     this.image = new Image();
     this.image.src = './assets/images/bullet.png';
     this.pos = { x, y, dx, dy };
+    this.size = { x: 25, y: 25 };
   }
 
   drawBullet() {
-    this.ctx.drawImage(this.image, this.pos.x, this.pos.y, 25, 25);
+    this.ctx.drawImage(this.image, this.pos.x, this.pos.y, this.size.x, this.size.y);
   }
 
   update() {

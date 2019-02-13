@@ -5,7 +5,7 @@ export default class DestructibleSection extends ColumnSection {
     super(ctx, idx)
     this.image = new Image();
     this.image.src = './assets/images/plaque-in-artery.png';
-    this.health = 3;
+    this.health = 4;
   }
 
   // isHit() {

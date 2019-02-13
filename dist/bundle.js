@@ -96,8 +96,7 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Background; });
-/* harmony import */ var _g_radius__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./g-radius */ "./src/g-radius.js");
-
+// import { W, H } from './g-radius';
 
 
 class Background {
@@ -116,7 +115,7 @@ class Background {
     if (this.scrollVal >= 800) {
       this.scrollVal = 0;
     }
-    this.scrollVal += 5;
+    this.scrollVal += 4.5;
 
     this.ctx.fillStyle = '#8B1C15';
     this.ctx.fillRect(0, 0, 800, 500);
@@ -143,10 +142,11 @@ class Bullet {
     this.image = new Image();
     this.image.src = './assets/images/bullet.png';
     this.pos = { x, y, dx, dy };
+    this.size = { x: 25, y: 25 };
   }
 
   drawBullet() {
-    this.ctx.drawImage(this.image, this.pos.x, this.pos.y, 25, 25);
+    this.ctx.drawImage(this.image, this.pos.x, this.pos.y, this.size.x, this.size.y);
   }
 
   update() {
@@ -177,8 +177,6 @@ class Column {
     this.ctx = ctx;
     this.speed = 5;
     this.sections = this.setColumn();
-    // this.columnSection = new ColumnSection(ctx);
-    // this.destructibleSection = new DestructibleSection(ctx);
     this.destructibleIdx = null;
   }
   
@@ -194,10 +192,13 @@ class Column {
       }
       i++;
     }
+    this.pos = { x: sections[0].pos.x };
+    this.size = { x: sections[0].size.x };
     return sections;
   }
 
   drawColumn() {
+    this.pos = { x: this.sections[0].pos.x };
     this.sections.forEach((section) => {
       if (section !== null) {
         section.drawSection();    
@@ -230,11 +231,11 @@ class ColumnSection {
     this.image = new Image();
     this.image.src = './assets/images/artery-wall.png';
     this.pos = { x: 810, y: (this.idx * 100) }
-    this.size = { x: 75, y: 100 };
+    this.size = { x: 120, y: 100 };
   }
 
   drawSection() {
-    this.pos.x -= 5;
+    this.pos.x -= 3;
     this.ctx.drawImage(this.image, this.pos.x, this.pos.y, this.size.x, this.size.y);
   }
 }
@@ -259,7 +260,7 @@ class DestructibleSection extends _column_section__WEBPACK_IMPORTED_MODULE_0__["
     super(ctx, idx)
     this.image = new Image();
     this.image.src = './assets/images/plaque-in-artery.png';
-    this.health = 3;
+    this.health = 4;
   }
 
   // isHit() {
@@ -361,8 +362,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _background__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./background */ "./src/background.js");
 /* harmony import */ var _key_handler__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./key_handler */ "./src/key_handler.js");
 /* harmony import */ var _column__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./column */ "./src/column.js");
-/* harmony import */ var _destructible_section__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./destructible_section */ "./src/destructible_section.js");
+/* harmony import */ var _virus__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./virus */ "./src/virus.js");
 /* harmony import */ var _empty_section__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./empty_section */ "./src/empty_section.js");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./util */ "./src/util.js");
+
 
 
 
@@ -380,55 +383,58 @@ class Game {
     this.play = this.play.bind(this);
     this.columnCollisionCheck = this.columnCollisionCheck.bind(this);
     this.bulletCollisionCheck = this.bulletCollisionCheck.bind(this);
+    this.virusPlayerCheck = this.virusPlayerCheck.bind(this);
+    this.virusWallCheck = this.virusWallCheck.bind(this);
     this.bullets = [];
     this.columns = [];
+    this.viruses = [];
     this.timer = 0;
-    //spawn rate
-    //columns
     //score
   }
 
-// newGame = () => {
-//   this.game = new Game();
-//   this.state = {
-//     paused: false,
-//   }
+  // newGame = () => {
+  //   this.game = new Game();
+  //   this.state = {
+  //     paused: false,
+  //   }
 
-//   this.startGame();
-// }
-
-
-  // play() {
-  //   this.render();
-  //   this.update();
+  //   this.startGame();
   // }
 
   update() {
     this.timer++;
     this.spawnColumn();
+    this.spawnVirus();
     this.columnCollisionCheck();
     this.bulletCollisionCheck();
-    //this.targetDestroyedCheck
-    //this.columnOutCheck
+    this.virusWallCheck();
+    this.virusPlayerCheck();
+    this.columnOutCheck();
+    this.virusOutCheck();
   }
-  
+
   togglePause() {
     this.paused = false ? undefined : this.paused = false;
   }
-  
+
   spawnColumn() {
-    if (this.timer % 100 === 0) {
+    if (this.timer % 160 === 0) {
       this.columns.push(new _column__WEBPACK_IMPORTED_MODULE_3__["default"](this.ctx));
+    }
+  }
+
+  spawnVirus() {
+    if (this.timer % 160 === 120 && this.timer > 200) {
+      this.viruses.push(new _virus__WEBPACK_IMPORTED_MODULE_4__["default"](this.ctx));
     }
   }
 
   columnCollisionCheck() {
     this.columns.forEach((column) => {
       column.sections.forEach((section) => {
-        if (Math.abs(section.pos.x - this.player.pos.x) < 53
-            && Math.abs(section.pos.y - this.player.pos.y) < 53) {
-              this.gameOver();
-            }
+        if (_util__WEBPACK_IMPORTED_MODULE_6__["default"].isCollided(this.player, section)) {
+          this.gameOver();
+        }
       });
     })
   }
@@ -437,36 +443,74 @@ class Game {
     this.columns.forEach((column, i) => {
       column.sections.forEach((section, j) => {
         this.player.bullets.forEach((bullet, k) => {
-          if (Math.abs(section.pos.x - bullet.pos.x) < 25
-              && Math.abs((section.pos.y + 100) > (bullet.pos.y + 13))
-              && Math.abs((section.pos.y < bullet.pos.y + 13)) )
-            {
-              if (section.health) {
-                // debugger
-                section.health -=1;
-                if (section.health <= 0) {
-                  // debugger
-                  // this.columns[i].sections[j].splice(j, 1);
-                  this.columns[i].sections[j] = new _empty_section__WEBPACK_IMPORTED_MODULE_5__["default"];
-                  debugger
-                }
+          if (_util__WEBPACK_IMPORTED_MODULE_6__["default"].isCollided(bullet, section)) {
+            if (section.health) {
+              section.health -= 1;
+              if (section.health <= 0) {
+                this.columns[i].sections[j] = new _empty_section__WEBPACK_IMPORTED_MODULE_5__["default"];
               }
+            }
             this.player.bullets.splice(k, 1);
           }
         })
       })
     })
   }
-  //bullet must be between section.pos.y and section.pos.y + 100
-  //which means section.pos.y < bullet.y + 13 < section.pos.y + 100
-  //if j = column.destructibleIdx => health -1, if health === 0 splice section
+
+  virusPlayerCheck() {
+    this.viruses.forEach((virus) => {
+      if (_util__WEBPACK_IMPORTED_MODULE_6__["default"].isCollided(this.player, virus)) {
+        this.gameOver();
+      }
+    })
+  }
+
+  virusWallCheck() {
+    this.columns.forEach((column) => {
+      this.viruses.forEach((virus) => {
+        debugger
+        if (_util__WEBPACK_IMPORTED_MODULE_6__["default"].isCollided(virus, column)) {
+          debugger
+          virus.swapXDirection();
+        }
+        if ((virus.pos.x + virus.size.x >= 800) && virus.xVel > 0) {
+          virus.xVel = Math.abs(virus.xVel) * -1;
+        }
+        // column.sections.forEach((section) => {
+        //   if (Util.isCollided(virus, section) || virus.pos.x >= 800) {
+        //     virus.swapXDirection();
+        //   }
+        if (virus.pos.y <= 0) {
+          virus.yVel = Math.abs(virus.yVel);
+        }
+        if ((virus.pos.y + virus.size.y) >= 499) {
+          virus.yVel = Math.abs(virus.yVel) * -1;
+          // virus.swapYDirection();
+        }
+      })
+    })
+    // })
+  }
+
+  columnOutCheck() {
+    this.columns.forEach((column, i) => {
+      if (column.pos.x + column.size.x < 0) {
+        this.columns.splice(i, 1);
+      }
+    })
+  }
+
+  virusOutCheck() {
+    this.viruses.forEach((virus, i) => {
+      if (virus.pos.x + virus.size.x < 0 || virus.pos.y + virus.size.y < 0
+        || virus.pos.y > 800) {
+        this.viruses.splice(i, 1);
+      }
+    })
+  }
 
   gameOver() {
     alert("YOU LOSE!")
-  }
-
-  targetDestroyedCheck() {
-
   }
 
   requestAnimFrame() {
@@ -495,6 +539,9 @@ class Game {
     });
     this.columns.forEach((column) => {
       column.drawColumn();
+    });
+    this.viruses.forEach((virus) => {
+      virus.drawVirus();
     })
   }
 }
@@ -604,7 +651,7 @@ class Player {
   constructor(ctx) {
     this.ctx = ctx;
     this.image = new Image();
-    this.image.src = './assets/images/white-blood-cell.png';
+    this.image.src = './assets/images/drix.png';
 
     this.pos = { x: 500, y: 220 };
     this.size = { x: 50, y: 50 };
@@ -615,14 +662,13 @@ class Player {
     this.xVel = 4;
     this.yVel = 6;
 
-    this.playerHurtbox = {
-      x: this.pos.x + this.size.x,
-      y: this.pos.y + this.size.y,
-    }
+    // this.playerHurtbox = {
+    //   x: this.pos.x + this.size.x,
+    //   y: this.pos.y + this.size.y,
+    // }
   }
 
   drawPlayer() {
-    // this.ctx.clearRect(0, 0, 800, 500);
     this.ctx.drawImage(this.image, this.pos.x, this.pos.y, this.size.x, this.size.y);
     this.bullets.forEach((b, i) => {
       b.drawBullet();
@@ -644,7 +690,7 @@ class Player {
         dy: 0,
       }));
       this.fireable = false;
-      setTimeout(() => { this.fireable = true }, 250);
+      setTimeout(() => { this.fireable = true }, 170);
     }
   }
 
@@ -684,6 +730,98 @@ class Player {
         this.pos.x -= this.xVel;
       }
     }
+  }
+}
+
+/***/ }),
+
+/***/ "./src/util.js":
+/*!*********************!*\
+  !*** ./src/util.js ***!
+  \*********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const Util = {
+  isCollided(source, target) {
+    return !(
+      ( ( source.pos.y + source.size.y ) < ( target.pos.y ) ) ||
+      ( source.pos.y > ( target.pos.y + target.size.y ) ) ||
+      ( ( source.pos.x + source.size.x ) < target.pos.x ) ||
+      ( source.pos.x > ( target.pos.x + target.size.x ) )
+    );
+  }
+}
+
+// randomDirection() {
+//   return Math.floor(Math.random() * 2)
+// }
+
+/* harmony default export */ __webpack_exports__["default"] = (Util);
+
+  // isCollided(player, section) {
+  //   return !(
+  //     ( ( player.pos.y + player.size.y ) < ( section.pos.y ) ) ||
+  //     ( player.pos.y > ( section.pos.y + section.size.y ) ) ||
+  //     ( ( player.pos.x + player.size.x ) < section.pos.x ) ||
+  //     ( player.pos.x > ( section.pos.x + section.size.x ) )
+  //   );
+  // }
+
+
+  // export function bulletCollided(bullet, section) {
+  //   return !(
+  //     ( ( bullet.pos.y + bullet.size.y ) < ( section.pos.y ) ) ||
+  //     ( bullet.pos.y > ( section.pos.y + section.size.y ) ) ||
+  //     ( ( bullet.pos.x + bullet.size.x ) < section.pos.x ) ||
+  //     ( bullet.pos.x > ( section.pos.x + section.size.x ) )
+  //   );
+  // }
+
+
+/***/ }),
+
+/***/ "./src/virus.js":
+/*!**********************!*\
+  !*** ./src/virus.js ***!
+  \**********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Virus; });
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./util */ "./src/util.js");
+
+
+class Virus {
+  constructor(ctx) {
+    this.ctx = ctx;
+    this.image = new Image();
+    this.image.src = './assets/images/virus.png';
+    this
+    this.xVel = -5;
+    this.yVel = (4 * (Math.floor(Math.random() * 2) === 0 ? 1 : -1 ));
+    this.size = { x: 45, y: 45 };
+    this.pos = { x: 780, y: Math.floor(Math.random() * (500 - this.size.y)) };
+  }
+
+  drawVirus() {
+    this.pos.x += this.xVel;
+    this.pos.y += this.yVel;
+    this.ctx.drawImage(this.image, this.pos.x, this.pos.y, this.size.x, this.size.y);
+  }
+
+
+  swapXDirection() {
+    this.xVel *= -1;
+  }
+
+  swapYDirection() {
+    debugger
+    this.yVel *= -1;
   }
 }
 

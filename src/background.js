@@ -1,4 +1,4 @@
-import { W, H } from './g-radius';
+// import { W, H } from './g-radius';
 
 
 export default class Background {
@@ -17,7 +17,7 @@ export default class Background {
     if (this.scrollVal >= 800) {
       this.scrollVal = 0;
     }
-    this.scrollVal += 5;
+    this.scrollVal += 4.5;
 
     this.ctx.fillStyle = '#8B1C15';
     this.ctx.fillRect(0, 0, 800, 500);

@@ -6,8 +6,6 @@ export default class Column {
     this.ctx = ctx;
     this.speed = 5;
     this.sections = this.setColumn();
-    // this.columnSection = new ColumnSection(ctx);
-    // this.destructibleSection = new DestructibleSection(ctx);
     this.destructibleIdx = null;
   }
   
@@ -23,10 +21,13 @@ export default class Column {
       }
       i++;
     }
+    this.pos = { x: sections[0].pos.x };
+    this.size = { x: sections[0].size.x };
     return sections;
   }
 
   drawColumn() {
+    this.pos = { x: this.sections[0].pos.x };
     this.sections.forEach((section) => {
       if (section !== null) {
         section.drawSection();    

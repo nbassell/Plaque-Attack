@@ -12,12 +12,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const ctx = canvas.getContext('2d');
   canvas.width = W;
   canvas.height = H;
+  const play_again = document.getElementsByClassName("play-again-btn")[0];
+  play_again.classList.add('hide');
   const game = new Game(ctx, canvas);
   const background = new Background(ctx);
   background.drawBackground();
-  game.play();
-//   document.addEventListener("keypress", (e) => {
-//     if (e.keyCode === 32) game.player.shoot();
-// });
+  game.start();
 })
 

@@ -1,9 +1,166 @@
+@import url('https://fonts.googleapis.com/css?family=Luckiest+Guy');
+
+
 body {
   padding: 0;
   margin: 0;
   background-color: bisque;
+  background-size: cover;
+  background-position: center;
+  font-family: 'Luckiest Guy', cursive;
+}
+
+.main-content {
+  display: flex;
+  width: 100%;
+  margin: 0 auto;
 }
 
 canvas {
-  margin: 100px;
+  display: block;
+  margin: 0 auto;
+  border: 2px solid black;
+  position: relative;
+}
+
+.game {
+
+}
+
+.game-window {
+  /* width: 65%; */
+}
+
+.title {
+  font-size: 50px;
+  text-align: center;
+  color: #cc0707;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 2px black;
+}
+
+.play-again-btn, .start-btn {
+  position: absolute;
+  left: 44%;
+  top: 70%;
+  z-index: 2;
+  font-size: 24px;
+  color: rgb(231, 207, 127);
+  text-shadow: 0 2px 2px black;
+  background: rgb(46, 148, 6);
+  /* border: 3px solid #666666; */
+  padding: 15px 40px;
+  border-radius: 4px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.start-btn {
+  left: 45%;
+}
+
+.play-again-btn.hide, .start-btn.hide, .instruction-list.hide {
+  display: none;
+}
+
+.score-container {
+  margin-left: 560px;
+  height: 60px;
+  /* margin-top: 50px; */
+}
+
+#score {
+  display: inline-block;
+  font-size: 20px;
+  /* position: relative; */
+  color: #cc0707;
+  text-shadow: 0 1px 1px black;
+  letter-spacing: 0.5mm;
+  margin-left: 10px;
+}
+
+.pulsate {
+  -webkit-animation: pulsate 1.35s ease-out;
+  -webkit-animation-iteration-count: infinite; 
+  /* opacity: 0.5; */
+}
+@-webkit-keyframes pulsate {
+  0% { 
+      color: #e94e4e;
+      transform: scale(0.9) translateX(0);
+  }
+  50% { 
+      color: #cc0707;
+      
+      transform: scale(1.2) translateX(15px);
+  }
+  100% { 
+      color: #e94e4e;
+      transform: scale(0.9) translateX(0);
+  }
+}
+
+.instructions {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  height: 200px;
+  margin: auto;
+  text-align: center;
+  padding: 0 20px;
+  font-size: 18px;
+  /* font-family: sans-serif;  */
+}
+
+.name {
+  text-align: center;
+  padding: 6px;
+  font-size: 20px;
+  margin-bottom: 30px;
+  margin-top: 30px;
+  text-align: left;
+  color: #333;
+}
+
+.icons {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  /* align-items: center; */
+  height: 200px;
+  margin: 10px;
+  margin-left: 20px;
+  width: 20%;
+}
+
+.fab, .fas {
+  font-size: 45px;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+ul li {
+  list-style-type: none;
+  /* font-family: 'Permanent Marker', cursive; */
+  font-size: 16px;
+  text-shadow: 2em;
+  margin: 8px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.footer {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+body {
+  overflow-y: hidden;
 }

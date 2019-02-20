@@ -18,24 +18,48 @@ export default class Game {
     this.bulletCollisionCheck = this.bulletCollisionCheck.bind(this);
     this.virusPlayerCheck = this.virusPlayerCheck.bind(this);
     this.virusWallCheck = this.virusWallCheck.bind(this);
+    this.addKeyListeners = this.addKeyListeners.bind(this);
+    this.restartGame = this.restartGame.bind(this);
     this.bullets = [];
     this.columns = [];
     this.viruses = [];
     this.timer = 0;
-    //score
+    this.score = document.getElementById('score');
+    this.play_again = document.getElementsByClassName("play-again-btn")[0];
+    this.start_btn = document.getElementsByClassName("start-btn")[0];
+    this.instructions = document.getElementsByClassName("instruction-list")[0];
+    this.score.innerHTML = '0';
+    this.dead = false;
   }
 
-  // newGame = () => {
-  //   this.game = new Game();
-  //   this.state = {
-  //     paused: false,
-  //   }
-
-  //   this.startGame();
-  // }
+  start() {
+    this.addKeyListeners();
+    this.background.drawBackground();
+  }
+  
+  restartGame() {
+    // window.location.reload();
+    this.addKeyListeners();
+    this.start_btn.classList.add('hide');
+    this.instructions.classList.remove('hide');
+    this.background.drawBackground();
+    this.bullets = [];
+    this.columns = [];
+    this.viruses = [];
+    this.timer = 0;
+    this.state = {
+      paused: false,
+    };
+    this.player.xVel = 4;
+    this.player.xYel = 6;
+    this.dead = false;
+    this.play_again.classList.add('hide');
+    this.play();
+  }
 
   update() {
     this.timer++;
+    this.updateScore();
     this.spawnColumn();
     this.spawnVirus();
     this.columnCollisionCheck();
@@ -44,6 +68,16 @@ export default class Game {
     this.virusPlayerCheck();
     this.columnOutCheck();
     this.virusOutCheck();
+  }
+
+  updateScore() {
+    this.score.innerHTML = parseInt(this.score.innerHTML) + 1;
+  }
+
+
+  addKeyListeners() {
+    this.play_again.addEventListener('click', this.restartGame.bind(this), false);
+    this.start_btn.addEventListener('click', this.restartGame.bind(this), false);
   }
 
   togglePause() {
@@ -57,7 +91,7 @@ export default class Game {
   }
 
   spawnVirus() {
-    if (this.timer % 160 === 120 && this.timer > 200) {
+    if (this.timer % 160 === 120 && this.timer > 700) {
       this.viruses.push(new Virus(this.ctx));
     }
   }
@@ -102,9 +136,7 @@ export default class Game {
     this.columns.forEach((column) => {
       this.viruses.forEach((virus) => {
         if (Util.isCollidedLeft(virus, column) && virus.xVel < 0) {
-          debugger
           virus.xVel = Math.abs(virus.xVel);
-          debugger
         }
         if (Util.isCollidedRight(virus, column) && virus.xVel > 0) {
           virus.xVel = Math.abs(virus.xVel) * -1;
@@ -140,7 +172,17 @@ export default class Game {
   }
 
   gameOver() {
-    alert("YOU LOSE!")
+    this.dead = true;
+  }
+
+  showMessage(message) {
+    this.ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
+    this.ctx.fillRect(0, 0, 800, 500);
+    this.ctx.font = "50px Luckiest Guy";
+    this.ctx.fillStyle = "bisque";
+    this.ctx.textAlign = "center";
+    this.ctx.textBaseline = "middle";
+    this.ctx.fillText(message, 400, 250)
   }
 
   requestAnimFrame() {
@@ -157,7 +199,12 @@ export default class Game {
   play() {
     this.update();
     this.render();
-    this.requestAnimFrame()(this.play.bind(this));
+    if (!this.dead) {
+      this.requestAnimFrame()(this.play.bind(this));
+    } else {
+      this.showMessage("Game Over");
+      this.play_again.classList.remove('hide');
+    }
   }
 
   render() {

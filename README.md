@@ -1,9 +1,9 @@
 # Plaque Attack!
 ## Background
-Released in 1985 by Konami, Gradius was one of the first side-scrolling shoot-'em-up arcade games. The player maneuvers a spacecraft around enemies and obstacles, shooting them to obtain points. My version, G-radius, will be a circle-themed version of this game, also loosely based on a minigame within Cuphead, a run and gun indie game released in 2017. In this minigame, players control an airplane and shoot gaps in columns in order to continue along the side-scrolling path of the level.
+Released in 1985 by Konami, Gradius was one of the first side-scrolling shoot-'em-up arcade games. The player maneuvers a spacecraft around enemies and obstacles, shooting them to obtain points. My version, Plaque Attack, will be a circle-themed version of this game, also loosely based on a minigame within Cuphead, a run and gun indie game released in 2017. In this minigame, players control an airplane and shoot gaps in columns in order to continue along the side-scrolling path of the level.
 
 ## Functionality & MVP
-In G-radius, a player will be able to:
+In Plaque Attack, a player will be able to:
 1. Start, pause, and (possibly?) restart the game
 2. Control the main circle by using W/A/S/D or the arrow keys to fly in between gaps in columns
 3. Shoot indicated sections of columns in order to destroy them and create a gap

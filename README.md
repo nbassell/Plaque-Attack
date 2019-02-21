@@ -1,4 +1,4 @@
-# G-radius
+# Plaque Attack!
 ## Background
 Released in 1985 by Konami, Gradius was one of the first side-scrolling shoot-'em-up arcade games. The player maneuvers a spacecraft around enemies and obstacles, shooting them to obtain points. My version, G-radius, will be a circle-themed version of this game, also loosely based on a minigame within Cuphead, a run and gun indie game released in 2017. In this minigame, players control an airplane and shoot gaps in columns in order to continue along the side-scrolling path of the level.
 

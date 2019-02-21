@@ -116,7 +116,7 @@ class Background {
       this.scrollVal = 0;
     }
     this.scrollVal += 4.5;
-
+console.log(this.scrollVal);
     this.ctx.fillStyle = '#8B1C15';
     this.ctx.fillRect(0, 0, 800, 500);
     this.ctx.drawImage(this.background, -this.scrollVal, 0, 800, 500);
@@ -401,12 +401,12 @@ class Game {
 
   start() {
     this.addKeyListeners();
-    this.background.drawBackground();
+    // this.background.drawBackground();
   }
   
   restartGame() {
     // window.location.reload();
-    this.addKeyListeners();
+    // this.addKeyListeners();
     this.start_btn.classList.add('hide');
     this.instructions.classList.remove('hide');
     this.background.drawBackground();
@@ -421,20 +421,8 @@ class Game {
     this.player.xYel = 6;
     this.dead = false;
     this.play_again.classList.add('hide');
+    this.score.innerHTML = '0';
     this.play();
-  }
-
-  update() {
-    this.timer++;
-    this.updateScore();
-    this.spawnColumn();
-    this.spawnVirus();
-    this.columnCollisionCheck();
-    this.bulletCollisionCheck();
-    this.virusWallCheck();
-    this.virusPlayerCheck();
-    this.columnOutCheck();
-    this.virusOutCheck();
   }
 
   updateScore() {
@@ -573,6 +561,20 @@ class Game {
       this.play_again.classList.remove('hide');
     }
   }
+
+  update() {
+    this.timer++;
+    this.updateScore();
+    this.spawnColumn();
+    this.spawnVirus();
+    this.columnCollisionCheck();
+    this.bulletCollisionCheck();
+    this.virusWallCheck();
+    this.virusPlayerCheck();
+    this.columnOutCheck();
+    this.virusOutCheck();
+  }
+
 
   render() {
     this.background.drawBackground();

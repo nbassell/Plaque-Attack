@@ -34,12 +34,12 @@ export default class Game {
 
   start() {
     this.addKeyListeners();
-    this.background.drawBackground();
+    // this.background.drawBackground();
   }
   
   restartGame() {
     // window.location.reload();
-    this.addKeyListeners();
+    // this.addKeyListeners();
     this.start_btn.classList.add('hide');
     this.instructions.classList.remove('hide');
     this.background.drawBackground();
@@ -54,20 +54,8 @@ export default class Game {
     this.player.xYel = 6;
     this.dead = false;
     this.play_again.classList.add('hide');
+    this.score.innerHTML = '0';
     this.play();
-  }
-
-  update() {
-    this.timer++;
-    this.updateScore();
-    this.spawnColumn();
-    this.spawnVirus();
-    this.columnCollisionCheck();
-    this.bulletCollisionCheck();
-    this.virusWallCheck();
-    this.virusPlayerCheck();
-    this.columnOutCheck();
-    this.virusOutCheck();
   }
 
   updateScore() {
@@ -206,6 +194,20 @@ export default class Game {
       this.play_again.classList.remove('hide');
     }
   }
+
+  update() {
+    this.timer++;
+    this.updateScore();
+    this.spawnColumn();
+    this.spawnVirus();
+    this.columnCollisionCheck();
+    this.bulletCollisionCheck();
+    this.virusWallCheck();
+    this.virusPlayerCheck();
+    this.columnOutCheck();
+    this.virusOutCheck();
+  }
+
 
   render() {
     this.background.drawBackground();

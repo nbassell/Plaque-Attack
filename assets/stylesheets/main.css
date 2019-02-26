@@ -12,8 +12,10 @@ body {
 
 .main-content {
   display: flex;
-  width: 100%;
+  width: 100vw;
+  height: 80vh;
   margin: 0 auto;
+  align-items: center;
 }
 
 canvas {
@@ -24,31 +26,28 @@ canvas {
 }
 
 .game {
-
-}
-
-.game-window {
-  /* width: 65%; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .title {
-  font-size: 50px;
+  font-size: 60px;
   text-align: center;
   color: #cc0707;
-  margin-bottom: 10px;
+  margin: 20px 0 10px;
   text-shadow: 0 2px 2px black;
 }
 
 .play-again-btn, .start-btn {
   position: absolute;
-  left: 44%;
-  top: 70%;
+  /* left: 44%; */
+  top: 58%;
   z-index: 2;
   font-size: 24px;
   color: rgb(231, 207, 127);
   text-shadow: 0 2px 2px black;
   background: rgb(46, 148, 6);
-  /* border: 3px solid #666666; */
   padding: 15px 40px;
   border-radius: 4px;
   cursor: pointer;
@@ -56,23 +55,38 @@ canvas {
 }
 
 .start-btn {
-  left: 45%;
+  /* left: 45%; */
 }
 
 .play-again-btn.hide, .start-btn.hide, .instruction-list.hide {
   display: none;
 }
 
+.instructions {
+  display: flex;
+  margin: auto;
+  width: 20%;
+}
+
+.controls {
+  font-size: 30px;
+  margin-bottom: 10px !important;
+}
+
+.instruction-list p {
+  font-size: 20px;
+  margin: 10px;
+}
+
 .score-container {
-  margin-left: 560px;
+  margin-right: 675px;
   height: 60px;
-  /* margin-top: 50px; */
+  text-align: center;
 }
 
 #score {
   display: inline-block;
   font-size: 20px;
-  /* position: relative; */
   color: #cc0707;
   text-shadow: 0 1px 1px black;
   letter-spacing: 0.5mm;
@@ -104,16 +118,15 @@ canvas {
   display: flex;
   flex-direction: column;
   width: 20%;
-  height: 200px;
+  height: 10vh;
   margin: auto;
   text-align: center;
   padding: 0 20px;
   font-size: 18px;
-  /* font-family: sans-serif;  */
 }
 
 .name {
-  text-align: center;
+  text-align: center !important;
   padding: 6px;
   font-size: 20px;
   margin-bottom: 30px;
@@ -124,9 +137,7 @@ canvas {
 
 .icons {
   display: flex;
-  /* flex-direction: column; */
   justify-content: center;
-  /* align-items: center; */
   height: 200px;
   margin: 10px;
   margin-left: 20px;
@@ -144,7 +155,6 @@ ul {
 
 ul li {
   list-style-type: none;
-  /* font-family: 'Permanent Marker', cursive; */
   font-size: 16px;
   text-shadow: 2em;
   margin: 8px;
@@ -158,7 +168,13 @@ a {
 .footer {
   margin-top: 15px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  width: 20%;
+  height: 10vh;
+  margin: auto;
+  text-align: center;
 }
 
 body {

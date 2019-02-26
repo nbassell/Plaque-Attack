@@ -1,47 +1,55 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Plaque Attack!</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="./assets/stylesheets/main.css" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <link rel="shortcut icon" type="image/ico" href="./assets/images/favicon.ico">
-    <script src="./dist/bundle.js"></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Plaque Attack!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="./assets/stylesheets/main.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="shortcut icon" type="image/ico" href="./assets/images/favicon.ico">
+  <script src="./dist/bundle.js"></script>
 </head>
+
 <body>
-  <div className="main-content">
+  <div class="main-content">
     <div class="instructions">
       <div class="instruction-list">
-      <h2>Controls:</h2>
-        Use the arrow keys to move </br>
-        around. Beware of the viruses!</br>
-        Space bar to shoot. </br>
+        <h2 class="controls">Controls:</h2>
+        <p>
+          Use the arrow keys to move </br>
+          around. Beware of the </br>
+          indestructible viruses!</br>
+          Space bar to shoot. </br>
+        </p>
         <!-- 'p' to toggle pause -->
       </div>
     </div>
     <div class="game">
-        <div class="title">PLAQUE ATTACK</div>
-        <div class="score-container">Score: <p id="score" class="pulsate"></p></div>
-        <canvas class="game-window" id="canvas" width="800" height="500" style="border: 1px solid black"></canvas>
-        <div class="start-btn">
-          Attack!
-        </div>
-        <div class="play-again-btn">
-          Play again?
-        </div>
+      <div class="title">PLAQUE ATTACK</div>
+      <div class="score-container">Score: <p id="score" class="pulsate"></p>
       </div>
-      <div class="footer">
-        <div class="name">
-          Made by: Nadav Bassell
-        </div>
-        <ul class="icons">
-          <li><a href="https://www.linkedin.com/in/nbassell/"><i class="fab fa-linkedin"></i></a></li>
-          <li><a href="https://github.com/nbassell"><i class="fab fa-github"></i></a></li>
-          <li><a href="https://nbassell.github.io/"><i class="fas fa-user-alt"></i></a></li>
-        </ul>
+      <canvas class="game-window" id="canvas" width="800" height="500" style="border: 1px solid black"></canvas>
+      <div class="start-btn">
+        Attack!
       </div>
+      <div class="play-again-btn">
+        Play again?
+      </div>
+    </div>
+    <div class="footer">
+      <div class="name">
+        Made by: Nadav Bassell
+      </div>
+      <ul class="icons">
+        <li><a href="https://www.linkedin.com/in/nbassell/"><i class="fab fa-linkedin"></i></a></li>
+        <li><a href="https://github.com/nbassell"><i class="fab fa-github"></i></a></li>
+        <li><a href="https://nbassell.github.io/"><i class="fas fa-user-alt"></i></a></li>
+      </ul>
+    </div>
   </div>
 </body>
+
 </html>

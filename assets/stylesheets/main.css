@@ -79,9 +79,10 @@ canvas {
 }
 
 .score-container {
-  margin-right: 675px;
+  margin-right: 590px;
   height: 60px;
-  text-align: center;
+  text-align: left;
+  min-width: 200px;
 }
 
 #score {

@@ -145,6 +145,15 @@ canvas {
   width: 20%;
 }
 
+.icons i {
+  transition: 0.7s;
+  font-size: 38px;
+}
+
+.icons i:hover {
+  transform: rotate(360deg) scale(1.5);
+}
+
 .fab, .fas {
   font-size: 45px;
 }

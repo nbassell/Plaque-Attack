@@ -200,7 +200,7 @@ class Column {
     this.pos = { 
       x: this.sections[0].pos.x < 850 ? this.sections[0].pos.x : this.sections[1].pos.x };
     this.sections.forEach((section) => {
-      if (section !== null) {
+      if (section !== null && !section.blink) {
         section.drawSection();    
       }
     })
@@ -261,13 +261,15 @@ class DestructibleSection extends _column_section__WEBPACK_IMPORTED_MODULE_0__["
     this.image = new Image();
     this.image.src = './assets/images/plaque-in-artery.png';
     this.health = 4;
+    this.blinking = false;
   }
 
-  // isHit() {
-  //   this.health -= 1;
-  //   if (this.health <= 0) {
-      
-  //   }
+  // blink() {
+  //   debugger
+  //   this.blinking = true;
+  //   setTimeout(() => {
+  //     this.blinking = false
+  //   }, 100);
   // }
 
   // drawSection() {
@@ -466,7 +468,8 @@ class Game {
         this.player.bullets.forEach((bullet, k) => {
           if (_util__WEBPACK_IMPORTED_MODULE_6__["default"].isCollided(bullet, section)) {
             if (section.health) {
-              section.health -= 1;
+              debugger
+              _util__WEBPACK_IMPORTED_MODULE_6__["default"].isHit(section);
               if (section.health <= 0) {
                 this.columns[i].sections[j] = new _empty_section__WEBPACK_IMPORTED_MODULE_5__["default"];
               }
@@ -818,12 +821,15 @@ const Util = {
       ( ( source.pos.y + source.size.y ) < ( target.pos.y ) ) ||
       ( source.pos.y > ( target.pos.y + target.size.y ) )
     );
+  },
+
+  isHit(section) {
+    section.health -= 1;
+    if (section.health > 0) {
+      section.blink();
+    }
   }
 }
-
-// randomDirection() {
-//   return Math.floor(Math.random() * 2)
-// }
 
 /* harmony default export */ __webpack_exports__["default"] = (Util);
 
@@ -867,7 +873,6 @@ class Virus {
     this.ctx = ctx;
     this.image = new Image();
     this.image.src = './assets/images/virus.png';
-    this
     this.xVel = -5;
     this.yVel = (4 * (Math.floor(Math.random() * 2) === 0 ? 1 : -1 ));
     this.size = { x: 45, y: 45 };

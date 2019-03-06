@@ -6,13 +6,15 @@ export default class DestructibleSection extends ColumnSection {
     this.image = new Image();
     this.image.src = './assets/images/plaque-in-artery.png';
     this.health = 4;
+    this.blinking = false;
   }
 
-  // isHit() {
-  //   this.health -= 1;
-  //   if (this.health <= 0) {
-      
-  //   }
+  // blink() {
+  //   debugger
+  //   this.blinking = true;
+  //   setTimeout(() => {
+  //     this.blinking = false
+  //   }, 100);
   // }
 
   // drawSection() {

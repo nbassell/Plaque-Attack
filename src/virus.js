@@ -5,7 +5,6 @@ export default class Virus {
     this.ctx = ctx;
     this.image = new Image();
     this.image.src = './assets/images/virus.png';
-    this
     this.xVel = -5;
     this.yVel = (4 * (Math.floor(Math.random() * 2) === 0 ? 1 : -1 ));
     this.size = { x: 45, y: 45 };

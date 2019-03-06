@@ -27,12 +27,15 @@ const Util = {
       ( ( source.pos.y + source.size.y ) < ( target.pos.y ) ) ||
       ( source.pos.y > ( target.pos.y + target.size.y ) )
     );
+  },
+
+  isHit(section) {
+    section.health -= 1;
+    if (section.health > 0) {
+      section.blink();
+    }
   }
 }
-
-// randomDirection() {
-//   return Math.floor(Math.random() * 2)
-// }
 
 export default Util;
 

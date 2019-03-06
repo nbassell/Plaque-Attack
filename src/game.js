@@ -100,7 +100,8 @@ export default class Game {
         this.player.bullets.forEach((bullet, k) => {
           if (Util.isCollided(bullet, section)) {
             if (section.health) {
-              section.health -= 1;
+              debugger
+              Util.isHit(section);
               if (section.health <= 0) {
                 this.columns[i].sections[j] = new EmptySection;
               }

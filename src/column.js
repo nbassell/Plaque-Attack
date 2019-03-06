@@ -30,7 +30,7 @@ export default class Column {
     this.pos = { 
       x: this.sections[0].pos.x < 850 ? this.sections[0].pos.x : this.sections[1].pos.x };
     this.sections.forEach((section) => {
-      if (section !== null) {
+      if (section !== null && !section.blink) {
         section.drawSection();    
       }
     })

@@ -143,14 +143,19 @@ canvas {
   margin: 10px;
   margin-left: 20px;
   width: 20%;
+  min-width: 280px;
 }
 
-.icons i {
+.icons li {
+  margin: 15px;
+}
+
+i {
   transition: 0.7s;
   font-size: 38px;
 }
 
-.icons i:hover {
+i:hover {
   transform: rotate(360deg) scale(1.5);
 }
 

@@ -27,7 +27,7 @@ export default class Player {
     this.ctx.drawImage(this.image, this.pos.x, this.pos.y, this.size.x, this.size.y);
     this.bullets.forEach((b, i) => {
       b.drawBullet();
-      if (b.pos.x > 800) {
+      if (b.pos.x > 1000) {
         this.bullets.splice(i, 1);
       } else {
         b.update();

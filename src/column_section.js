@@ -6,7 +6,7 @@ export default class ColumnSection {
     this.idx = idx;
     this.image = new Image();
     this.image.src = './assets/images/artery-wall.png';
-    this.pos = { x: 810, y: (this.idx * 100) }
+    this.pos = { x: 1010, y: (this.idx * 100) }
     this.size = { x: 120, y: 100 };
   }
 

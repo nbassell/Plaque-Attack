@@ -73,13 +73,13 @@ export default class Game {
   }
 
   spawnColumn() {
-    if (this.timer % 160 === 0) {
+    if (this.timer % 180 === 0) {
       this.columns.push(new Column(this.ctx));
     }
   }
 
   spawnVirus() {
-    if (this.timer % 160 === 120 && this.timer > 700) {
+    if (this.timer % 180 === 40 && this.timer > 800) {
       this.viruses.push(new Virus(this.ctx));
     }
   }
@@ -129,7 +129,7 @@ export default class Game {
         if (Util.isCollidedRight(virus, column) && virus.xVel > 0) {
           virus.xVel = Math.abs(virus.xVel) * -1;
         }
-        if ((virus.pos.x + virus.size.x >= 800) && virus.xVel > 0) {
+        if ((virus.pos.x + virus.size.x >= 1000) && virus.xVel > 0) {
           virus.xVel = Math.abs(virus.xVel) * -1;
         }
         if (virus.pos.y <= 0) {
@@ -153,7 +153,7 @@ export default class Game {
   virusOutCheck() {
     this.viruses.forEach((virus, i) => {
       if (virus.pos.x + virus.size.x < 0 || virus.pos.y + virus.size.y < 0
-        || virus.pos.y > 800) {
+        || virus.pos.y > 1000) {
         this.viruses.splice(i, 1);
       }
     })
@@ -165,7 +165,7 @@ export default class Game {
 
   showMessage(message) {
     this.ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
-    this.ctx.fillRect(0, 0, 800, 500);
+    this.ctx.fillRect(0, 0, 1000, 500);
     this.ctx.font = "50px Luckiest Guy";
     this.ctx.fillStyle = "bisque";
     this.ctx.textAlign = "center";
@@ -196,6 +196,7 @@ export default class Game {
   }
 
   update() {
+    console.log(this.timer);
     this.timer++;
     this.updateScore();
     this.spawnColumn();

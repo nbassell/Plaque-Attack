@@ -2,7 +2,7 @@ import Player from './player';
 import Game from './game';
 import Background from './background';
 
-const W = 800;
+const W = 1000;
 const H = 500;
 
 export { W, H };

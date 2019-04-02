@@ -28,7 +28,7 @@ export default class Column {
 
   drawColumn() {
     this.pos = { 
-      x: this.sections[0].pos.x < 850 ? this.sections[0].pos.x : this.sections[1].pos.x };
+      x: this.sections[0].pos.x < 1050 ? this.sections[0].pos.x : this.sections[1].pos.x };
     this.sections.forEach((section) => {
       if (section !== null) {
         section.drawSection();    

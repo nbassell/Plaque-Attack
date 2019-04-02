@@ -105,21 +105,21 @@ class Background {
     this.background = new Image();
     this.background.src = './assets/images/muscle-cells.png';
     this.background.onload = () => {
-      this.ctx.drawImage(this.background, 0, 0, 800, 500);
+      this.ctx.drawImage(this.background, 0, 0, 1000, 500);
     }
     this.scrollVal = 0;
   }
 
   drawBackground() {
     // this.ctx.clearRect(0, 0, W, H);
-    if (this.scrollVal >= 800) {
+    if (this.scrollVal >= 1000) {
       this.scrollVal = 0;
     }
     this.scrollVal += 4.5;
     this.ctx.fillStyle = '#8B1C15';
-    this.ctx.fillRect(0, 0, 800, 500);
-    this.ctx.drawImage(this.background, -this.scrollVal, 0, 800, 500);
-    this.ctx.drawImage(this.background, 800 -this.scrollVal, 0, 800, 500);
+    this.ctx.fillRect(0, 0, 1000, 500);
+    this.ctx.drawImage(this.background, -this.scrollVal, 0, 1000, 500);
+    this.ctx.drawImage(this.background, 1000 -this.scrollVal, 0, 1000, 500);
   }
 }
 
@@ -198,7 +198,7 @@ class Column {
 
   drawColumn() {
     this.pos = { 
-      x: this.sections[0].pos.x < 850 ? this.sections[0].pos.x : this.sections[1].pos.x };
+      x: this.sections[0].pos.x < 1050 ? this.sections[0].pos.x : this.sections[1].pos.x };
     this.sections.forEach((section) => {
       if (section !== null) {
         section.drawSection();    
@@ -230,7 +230,7 @@ class ColumnSection {
     this.idx = idx;
     this.image = new Image();
     this.image.src = './assets/images/artery-wall.png';
-    this.pos = { x: 810, y: (this.idx * 100) }
+    this.pos = { x: 1010, y: (this.idx * 100) }
     this.size = { x: 120, y: 100 };
   }
 
@@ -294,7 +294,7 @@ class EmptySection {
     this.idx = idx;
     this.image = new Image();
     this.image.src = './assets/images/artery-wall.png';
-    this.pos = { x: 850, y: (this.idx * 100) }
+    this.pos = { x: 1050, y: (this.idx * 100) }
     this.size = { x: 0, y: 0 };
   }
 
@@ -325,7 +325,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const W = 800;
+const W = 1000;
 const H = 500;
 
 
@@ -439,13 +439,13 @@ class Game {
   }
 
   spawnColumn() {
-    if (this.timer % 160 === 0) {
+    if (this.timer % 180 === 0) {
       this.columns.push(new _column__WEBPACK_IMPORTED_MODULE_3__["default"](this.ctx));
     }
   }
 
   spawnVirus() {
-    if (this.timer % 160 === 120 && this.timer > 700) {
+    if (this.timer % 180 === 40 && this.timer > 800) {
       this.viruses.push(new _virus__WEBPACK_IMPORTED_MODULE_4__["default"](this.ctx));
     }
   }
@@ -495,7 +495,7 @@ class Game {
         if (_util__WEBPACK_IMPORTED_MODULE_6__["default"].isCollidedRight(virus, column) && virus.xVel > 0) {
           virus.xVel = Math.abs(virus.xVel) * -1;
         }
-        if ((virus.pos.x + virus.size.x >= 800) && virus.xVel > 0) {
+        if ((virus.pos.x + virus.size.x >= 1000) && virus.xVel > 0) {
           virus.xVel = Math.abs(virus.xVel) * -1;
         }
         if (virus.pos.y <= 0) {
@@ -519,7 +519,7 @@ class Game {
   virusOutCheck() {
     this.viruses.forEach((virus, i) => {
       if (virus.pos.x + virus.size.x < 0 || virus.pos.y + virus.size.y < 0
-        || virus.pos.y > 800) {
+        || virus.pos.y > 1000) {
         this.viruses.splice(i, 1);
       }
     })
@@ -531,7 +531,7 @@ class Game {
 
   showMessage(message) {
     this.ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
-    this.ctx.fillRect(0, 0, 800, 500);
+    this.ctx.fillRect(0, 0, 1000, 500);
     this.ctx.font = "50px Luckiest Guy";
     this.ctx.fillStyle = "bisque";
     this.ctx.textAlign = "center";
@@ -562,6 +562,7 @@ class Game {
   }
 
   update() {
+    console.log(this.timer);
     this.timer++;
     this.updateScore();
     this.spawnColumn();
@@ -717,7 +718,7 @@ class Player {
     this.ctx.drawImage(this.image, this.pos.x, this.pos.y, this.size.x, this.size.y);
     this.bullets.forEach((b, i) => {
       b.drawBullet();
-      if (b.pos.x > 800) {
+      if (b.pos.x > 1000) {
         this.bullets.splice(i, 1);
       } else {
         b.update();

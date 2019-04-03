@@ -76,13 +76,13 @@ export default class Player {
   }
 
   moveRight() {
-    if (RIGHT) {
+    if (RIGHT && this.pos.x < (1000 - this.size.x)) {
       this.pos.x += this.xVel;
     } else {
       if (this.pos.x === 0) {
         this.pos.x;
       } else {
-        this.pos.x -= this.xVel;
+        this.pos.x -= (this.xVel - 0.35);
       }
     }
   }

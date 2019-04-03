@@ -16,3 +16,5 @@ export default class Bullet {
     this.pos.y += this.pos.dy;
   }
 }
+
+

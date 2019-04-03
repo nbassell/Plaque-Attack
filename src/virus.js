@@ -9,7 +9,7 @@ export default class Virus {
     this.xVel = -5;
     this.yVel = (4 * (Math.floor(Math.random() * 2) === 0 ? 1 : -1 ));
     this.size = { x: 45, y: 45 };
-    this.pos = { x: 780, y: Math.floor(Math.random() * (500 - this.size.y)) };
+    this.pos = { x: 980, y: Math.floor(Math.random() * (500 - this.size.y)) };
   }
 
   drawVirus() {

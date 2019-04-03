@@ -79,7 +79,7 @@ export default class Game {
   }
 
   spawnVirus() {
-    if (this.timer % 180 === 40 && this.timer > 800) {
+    if (this.timer % 180 === 60 && this.timer > 800) {
       this.viruses.push(new Virus(this.ctx));
     }
   }
@@ -196,7 +196,7 @@ export default class Game {
   }
 
   update() {
-    console.log(this.timer);
+    console.log(this.player.xVel);
     this.timer++;
     this.updateScore();
     this.spawnColumn();

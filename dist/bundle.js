@@ -154,6 +154,9 @@ class Bullet {
   }
 }
 
+
+
+
 /***/ }),
 
 /***/ "./src/column.js":
@@ -445,7 +448,7 @@ class Game {
   }
 
   spawnVirus() {
-    if (this.timer % 180 === 40 && this.timer > 800) {
+    if (this.timer % 180 === 60 && this.timer > 800) {
       this.viruses.push(new _virus__WEBPACK_IMPORTED_MODULE_4__["default"](this.ctx));
     }
   }
@@ -562,7 +565,7 @@ class Game {
   }
 
   update() {
-    console.log(this.timer);
+    console.log(this.player.xVel);
     this.timer++;
     this.updateScore();
     this.spawnColumn();
@@ -767,13 +770,13 @@ class Player {
   }
 
   moveRight() {
-    if (_key_handler__WEBPACK_IMPORTED_MODULE_1__["RIGHT"]) {
+    if (_key_handler__WEBPACK_IMPORTED_MODULE_1__["RIGHT"] && this.pos.x < (1000 - this.size.x)) {
       this.pos.x += this.xVel;
     } else {
       if (this.pos.x === 0) {
         this.pos.x;
       } else {
-        this.pos.x -= this.xVel;
+        this.pos.x -= (this.xVel - 0.35);
       }
     }
   }
@@ -872,7 +875,7 @@ class Virus {
     this.xVel = -5;
     this.yVel = (4 * (Math.floor(Math.random() * 2) === 0 ? 1 : -1 ));
     this.size = { x: 45, y: 45 };
-    this.pos = { x: 780, y: Math.floor(Math.random() * (500 - this.size.y)) };
+    this.pos = { x: 980, y: Math.floor(Math.random() * (500 - this.size.y)) };
   }
 
   drawVirus() {

@@ -170,7 +170,7 @@ export default class Game {
     this.ctx.fillStyle = "bisque";
     this.ctx.textAlign = "center";
     this.ctx.textBaseline = "middle";
-    this.ctx.fillText(message, 400, 250)
+    this.ctx.fillText(message, 500, 250)
   }
 
   requestAnimFrame() {
@@ -190,7 +190,7 @@ export default class Game {
     if (!this.dead) {
       this.requestAnimFrame()(this.play.bind(this));
     } else {
-      this.showMessage("Game Over");
+      this.showMessage(`Game Over!  Score: ${this.score.innerHTML}`);
       this.play_again.classList.remove('hide');
     }
   }

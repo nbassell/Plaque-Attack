@@ -1,5 +1,5 @@
 module.exports = {
-  entry: './src/g-radius.js',
+  entry: './src/plaque_attack.js',
   output: {
     filename: './bundle.js'
   },

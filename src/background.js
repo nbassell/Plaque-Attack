@@ -1,6 +1,3 @@
-// import { W, H } from './g-radius';
-
-
 export default class Background {
   constructor(ctx) {
     this.ctx = ctx;

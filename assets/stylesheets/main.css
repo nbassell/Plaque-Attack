@@ -79,7 +79,7 @@ canvas {
 }
 
 .score-container {
-  margin-right: 590px;
+  margin-right: 790px;
   height: 60px;
   text-align: left;
   min-width: 200px;
@@ -97,8 +97,8 @@ canvas {
 .pulsate {
   -webkit-animation: pulsate 1.35s ease-out;
   -webkit-animation-iteration-count: infinite; 
-  /* opacity: 0.5; */
 }
+
 @-webkit-keyframes pulsate {
   0% { 
       color: #e94e4e;

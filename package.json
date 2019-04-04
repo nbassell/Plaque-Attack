@@ -12,12 +12,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nbassell/G-radius.git"
+    "url": "git+https://github.com/nbassell/Plaque-Attack.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/nbassell/G-radius/issues"
+    "url": "https://github.com/nbassell/Plaque-Attack/issues"
   },
   "homepage": ".",
   "dependencies": {

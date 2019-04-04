@@ -8,6 +8,7 @@ body {
   background-size: cover;
   background-position: center;
   font-family: 'Luckiest Guy', cursive;
+  overflow-y: hidden;
 }
 
 .main-content {
@@ -112,10 +113,12 @@ canvas {
 .instructions {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   width: 20%;
-  height: 500px;
+  /* height: 500px; */
   margin: auto;
-  margin-top: 12%;
+  margin-top: 14%;
   text-align: center;
   padding: 0 20px;
   font-size: 18px;
@@ -176,7 +179,6 @@ a {
 }
 
 .footer {
-  margin-top: 15px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -185,10 +187,6 @@ a {
   height: 10vh;
   margin: auto;
   text-align: center;
-}
-
-body {
-  overflow-y: hidden;
 }
 
 .space-bar {

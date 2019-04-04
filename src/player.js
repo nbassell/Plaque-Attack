@@ -79,7 +79,7 @@ export default class Player {
     if (RIGHT && this.pos.x < (1000 - this.size.x)) {
       this.pos.x += this.xVel;
     } else {
-      if (this.pos.x === 0) {
+      if (this.pos.x <= 0) {
         this.pos.x;
       } else {
         this.pos.x -= (this.xVel - 0.35);

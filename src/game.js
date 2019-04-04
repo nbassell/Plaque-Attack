@@ -20,6 +20,7 @@ export default class Game {
     this.virusWallCheck = this.virusWallCheck.bind(this);
     this.addKeyListeners = this.addKeyListeners.bind(this);
     this.restartGame = this.restartGame.bind(this);
+    this.isRestarted = this.isRestarted.bind(this);
     this.bullets = [];
     this.columns = [];
     this.viruses = [];
@@ -37,9 +38,8 @@ export default class Game {
     // this.background.drawBackground();
   }
   
-  restartGame() {
+  restartGame(e) {
     // window.location.reload();
-    // this.addKeyListeners();
     this.start_btn.classList.add('hide');
     this.instructions.classList.remove('hide');
     this.background.drawBackground();
@@ -50,11 +50,13 @@ export default class Game {
     this.state = {
       paused: false,
     };
+    this.player.pos.x = 500;
     this.player.xVel = 4;
     this.player.xYel = 6;
     this.dead = false;
     this.play_again.classList.add('hide');
     this.score.innerHTML = '0';
+    window.removeEventListener('keydown', this.isRestarted);
     this.play();
   }
 
@@ -64,10 +66,17 @@ export default class Game {
 
 
   addKeyListeners() {
-    this.play_again.addEventListener('click', this.restartGame.bind(this), false);
-    this.start_btn.addEventListener('click', this.restartGame.bind(this), false);
+    this.play_again.addEventListener('click', this.restartGame);
+    this.start_btn.addEventListener('click', this.restartGame);
+    window.addEventListener('keydown', this.isRestarted);
   }
 
+  isRestarted(e) {
+    if (e.keyCode === 13) {
+      this.restartGame();
+    }
+  }
+// 
   togglePause() {
     this.paused = false ? this.paused = true : this.paused = false;
   }
@@ -160,6 +169,7 @@ export default class Game {
   }
 
   gameOver() {
+    this.addKeyListeners();
     this.dead = true;
   }
 
@@ -190,13 +200,12 @@ export default class Game {
     if (!this.dead) {
       this.requestAnimFrame()(this.play.bind(this));
     } else {
-      this.showMessage(`Game Over!  Score: ${this.score.innerHTML}`);
+      this.showMessage(`Game Over!  Final Score: ${this.score.innerHTML}`);
       this.play_again.classList.remove('hide');
     }
   }
 
   update() {
-    console.log(this.player.xVel);
     this.timer++;
     this.updateScore();
     this.spawnColumn();

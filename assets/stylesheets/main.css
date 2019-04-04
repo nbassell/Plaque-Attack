@@ -54,27 +54,21 @@ canvas {
   box-sizing: border-box;
 }
 
-.start-btn {
-  /* left: 45%; */
-}
+/* .start-btn {
+  left: 45%;
+} */
 
 .play-again-btn.hide, .start-btn.hide, .instruction-list.hide {
   display: none;
 }
 
-.instructions {
-  display: flex;
-  margin: auto;
-  width: 20%;
-}
-
 .controls {
-  font-size: 36px;
+  font-size: 42px;
   margin-bottom: 10px !important;
 }
 
 .instruction-list p {
-  font-size: 20px;
+  font-size: 26px;
   margin: 10px;
 }
 
@@ -101,17 +95,17 @@ canvas {
 
 @-webkit-keyframes pulsate {
   0% { 
-      color: #e94e4e;
-      transform: scale(0.9) translateX(0);
+    color: #e94e4e;
+    transform: scale(0.9) translateX(0);
   }
   50% { 
-      color: #cc0707;
+    color: #cc0707;
       
-      transform: scale(1.2) translateX(15px);
+    transform: scale(1.2) translateX(15px);
   }
   100% { 
-      color: #e94e4e;
-      transform: scale(0.9) translateX(0);
+    color: #e94e4e;
+    transform: scale(0.9) translateX(0);
   }
 }
 
@@ -119,8 +113,9 @@ canvas {
   display: flex;
   flex-direction: column;
   width: 20%;
-  height: 10vh;
+  height: 500px;
   margin: auto;
+  margin-top: 12%;
   text-align: center;
   padding: 0 20px;
   font-size: 18px;
@@ -129,7 +124,7 @@ canvas {
 .name {
   text-align: center !important;
   padding: 6px;
-  font-size: 20px;
+  font-size: 28px;
   margin-bottom: 30px;
   margin-top: 30px;
   text-align: left;
@@ -194,4 +189,8 @@ a {
 
 body {
   overflow-y: hidden;
+}
+
+.space-bar {
+  margin-top: 10px;
 }

@@ -377,6 +377,7 @@ class Game {
       paused: false,
     };
     this.player.pos.x = 500;
+    this.player.pos.y = 220;
     this.player.xVel = 4;
     this.player.xYel = 6;
     this.dead = false;

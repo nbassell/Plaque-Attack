@@ -46,7 +46,6 @@ canvas {
 
 .play-again-btn, .start-btn {
   position: absolute;
-  /* left: 44%; */
   top: 58%;
   z-index: 2;
   font-size: 24px;
@@ -54,14 +53,15 @@ canvas {
   text-shadow: 0 2px 2px black;
   background: rgb(46, 148, 6);
   padding: 15px 40px;
+  left: 41.7%;
   border-radius: 4px;
   cursor: pointer;
   box-sizing: border-box;
 }
 
-/* .start-btn {
-  left: 45%;
-} */
+.play-again-btn {
+  left: 39%;
+}
 
 .play-again-btn.hide, .start-btn.hide, .instruction-list.hide {
   display: none;
@@ -120,9 +120,8 @@ canvas {
   align-items: center;
   width: 20%;
   margin: auto;
-  padding-top: 
   text-align: center;
-  padding: 0 20px;
+  padding: 125px 20px 0;
   font-size: 18px;
 }
 

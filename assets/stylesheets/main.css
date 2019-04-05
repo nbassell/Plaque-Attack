@@ -40,6 +40,10 @@ canvas {
   text-shadow: 0 2px 2px black;
 }
 
+.canvas-wrapper {
+  position: relative;
+}
+
 .play-again-btn, .start-btn {
   position: absolute;
   /* left: 44%; */
@@ -113,12 +117,10 @@ canvas {
 .instructions {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   width: 20%;
-  /* height: 500px; */
   margin: auto;
-  margin-top: 14%;
+  padding-top: 
   text-align: center;
   padding: 0 20px;
   font-size: 18px;

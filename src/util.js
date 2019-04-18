@@ -17,13 +17,6 @@ const Util = {
     );
   },
 
-  // isCollidedLeft(source, target) {
-  //   return (
-  //     ( ( target.pos.x + target.size.x ) >= source.pos.x ) &&
-  //     ( ( target.pos.x + target.size.x ) < source.pos.x + source.size.x)
-  //   );
-  // },
-
   isCollidedLeft(source, target) {
     const targetRight = target.pos.x + target.size.x;
     const sourceLeft = source.pos.x;

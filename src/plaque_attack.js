@@ -1,4 +1,3 @@
-import Player from './player';
 import Game from './game';
 import Background from './background';
 

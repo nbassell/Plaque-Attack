@@ -16,11 +16,6 @@ export default class Player {
     this.shoot = this.shoot.bind(this);
     this.xVel = 4;
     this.yVel = 6;
-
-    // this.playerHurtbox = {
-    //   x: this.pos.x + this.size.x,
-    //   y: this.pos.y + this.size.y,
-    // }
   }
 
   drawPlayer() {

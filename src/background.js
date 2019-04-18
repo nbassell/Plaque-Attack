@@ -10,7 +10,6 @@ export default class Background {
   }
 
   drawBackground() {
-    // this.ctx.clearRect(0, 0, W, H);
     if (this.scrollVal >= 1000) {
       this.scrollVal = 0;
     }

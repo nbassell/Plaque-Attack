@@ -27,16 +27,22 @@ canvas {
 }
 
 .game {
+  width: 64%;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.game-window {
+  width: 90%;
+  /* height: 85%; */
 }
 
 .title {
   font-size: 60px;
   text-align: center;
   color: #cc0707;
-  margin: 20px 0 10px;
+  margin: 40px 0 10px;
   text-shadow: 0 2px 2px black;
 }
 
@@ -63,7 +69,7 @@ canvas {
   left: 39%;
 }
 
-.play-again-btn.hide, .start-btn.hide, .instruction-list.hide {
+.play-again-btn.hide, .start-btn.hide {
   display: none;
 }
 
@@ -72,16 +78,20 @@ canvas {
   margin-bottom: 10px !important;
 }
 
-.instruction-list p {
-  font-size: 26px;
+.instruction p {
+  /* font-size: 26px; */
+  margin: 5px;
+}
+
+.instruction h2 {
   margin: 10px;
 }
 
 .score-container {
-  margin-right: 790px;
+  margin-right: 78%;
   height: 60px;
   text-align: left;
-  min-width: 200px;
+  /* min-width: 200px; */
 }
 
 #score {
@@ -118,10 +128,12 @@ canvas {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 20%;
+  /* justify-content:  */
+  width: 18%;
+  height: 200px;
   margin: auto;
+  margin-bottom: 
   text-align: center;
-  padding: 125px 20px 0;
   font-size: 18px;
 }
 
@@ -142,11 +154,11 @@ canvas {
   margin: 10px;
   margin-left: 20px;
   width: 20%;
-  min-width: 280px;
+  /* min-width: 280px; */
 }
 
 .icons li {
-  margin: 15px;
+  margin: 12px;
 }
 
 i {
@@ -184,9 +196,10 @@ a {
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
-  width: 20%;
+  width: 18%;
   height: 10vh;
   margin: auto;
+  margin-right: 36px;
   text-align: center;
 }
 

@@ -28,7 +28,7 @@ export default class Game {
     this.score = document.getElementById('score');
     this.play_again = document.getElementsByClassName("play-again-btn")[0];
     this.start_btn = document.getElementsByClassName("start-btn")[0];
-    this.instructions = document.getElementsByClassName("instruction-list")[0];
+    this.instructions = document.getElementsByClassName("instruction")[0];
     this.score.innerHTML = '0';
     this.dead = false;
   }
@@ -41,7 +41,7 @@ export default class Game {
   restartGame(e) {
     // window.location.reload();
     this.start_btn.classList.add('hide');
-    this.instructions.classList.remove('hide');
+    // this.instructions.classList.remove('hide');
     this.background.drawBackground();
     this.bullets = [];
     this.columns = [];

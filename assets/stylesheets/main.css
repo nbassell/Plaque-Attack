@@ -9,6 +9,7 @@ body {
   background-position: center;
   font-family: 'Luckiest Guy', cursive;
   overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 .main-content {
@@ -24,6 +25,31 @@ canvas {
   margin: 0 auto;
   border: 2px solid black;
   position: relative;
+}
+
+.modal {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+  position: absolute;
+  top: 35%;
+  left: 22%;
+  text-align: center;
+  background-color: rgba(255,255,255,0.4);
+  color: rgb(255, 255, 255);
+  text-shadow: 1px 4px black;
+  padding: 8px;
+  border: 1px solid #888;
+  width: 51.8%;
+  font-size: 20px;
 }
 
 .game {
@@ -42,7 +68,7 @@ canvas {
   font-size: 60px;
   text-align: center;
   color: #cc0707;
-  margin: 40px 0 10px;
+  margin: 70px 0 10px;
   text-shadow: 0 2px 2px black;
 }
 
@@ -69,7 +95,7 @@ canvas {
   left: 39%;
 }
 
-.play-again-btn.hide, .start-btn.hide {
+.play-again-btn.hide, .start-btn.hide, .modal.hide {
   display: none;
 }
 

@@ -16,30 +16,29 @@
 <body>
   <div class="main-content">
     <div class="instructions">
-      <!-- <div class="instruction-list"> -->
-        <h2 class="controls">Controls:</h2>
-        <br />
-        <p>Move with:</p>
-        <img src="assets/images/noun_arrow keys_302301.svg">
-        <p>Shoot with:</p>
-        <p class="space-bar">Space</p>
-        <!-- onerror="this.src='your.png'" -->
-        <!-- <p>
-          Use the arrow keys to move </br>
-          around. Beware of the </br>
-          indestructible viruses!</br>
-          Space bar to shoot. </br>
-        </p> -->
-        <!-- 'p' to toggle pause -->
-      <!-- </div> -->
+      <h2 class="controls">Controls:</h2>
+      <br />
+      <p>Move with:</p>
+      <img src="assets/images/noun_arrow keys_302301.svg">
+      <p>Shoot with:</p>
+      <p class="space-bar">Space</p>
     </div>
     <div class="game">
       <div class="title">PLAQUE ATTACK</div>
       <div class="score-container">Score: <p id="score" class="pulsate"></p>
       </div>
       <div class="canvas-wrapper">
-        <canvas class="game-window" id="canvas" width="1000" height="500" style="border: 1px solid black"></canvas>
-        <div class="start-btn">
+        <div class="modal">
+          <div class="modal-content">
+            <p>Control Drix with the arrow keys as you move up the artery!</p>
+            <p>Use the spacebar to shoot Good Cholesterol.</p>
+            <p>Destroy the plaque buildup to pass through the columns.</p>
+            <p>Beware of the indestructable viruses.</p>
+            <p>Click to begin!</p>
+          </div>
+        </div>
+          <canvas class="game-window" id="canvas" width="1000" height="500" style="border: 1px solid black"></canvas>
+        <div class="start-btn hide">
           Attack!
         </div>
         <div class="play-again-btn">

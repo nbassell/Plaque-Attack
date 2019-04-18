@@ -7,4 +7,8 @@ export default class EmptySection {
     this.pos = { x: 1050, y: (this.idx * 100) }
     this.size = { x: 0, y: 0 };
   }
+
+  drawSection() {
+
+  }
 }

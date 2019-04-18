@@ -29,18 +29,27 @@ export default class Game {
     this.play_again = document.getElementsByClassName("play-again-btn")[0];
     this.start_btn = document.getElementsByClassName("start-btn")[0];
     this.instructions = document.getElementsByClassName("instruction")[0];
+    this.modal = document.getElementsByClassName("modal")[0];
     this.score.innerHTML = '0';
     this.dead = false;
   }
 
   start() {
     this.addKeyListeners();
-    this.printInstructions();
+    this.createModalListener();
+  }
+
+  createModalListener() {
+    this.modal.onclick = () => {
+      this.modal.classList.add('hide');
+      this.modal.removeAttribute("onclick");
+      this.start_btn.classList.remove('hide');
+      // this.play();
+    }
   }
   
   restartGame(e) {
     this.start_btn.classList.add('hide');
-    // this.instructions.classList.remove('hide');
     this.background.drawBackground();
     this.bullets = [];
     this.columns = [];
@@ -69,25 +78,6 @@ export default class Game {
     this.play_again.addEventListener('click', this.restartGame);
     this.start_btn.addEventListener('click', this.restartGame);
     window.addEventListener('keydown', this.isRestarted);
-  }
-
-  printInstructions(){
-    let line0 = "Control Drix with the arrow keys as you move up the artery!";
-    let line1 = "Use the spacebar to shoot Good Cholesterol at the plaque buildup.";
-    let line2 = "Beware of the indestructable viruses!";
-    let line3 = "Click the button or press enter to begin";
-    // this.context.fillStyle = "rgba(0, 0, 0, 0.4)";
-    // this.context.fillRect(0, 0, this.width, this.height);
-    this.ctx.font = "bold 16px Luckiest Guy";
-    this.ctx.fillStyle = 'black';
-    this.ctx.textBaseline = 'middle';
-    this.ctx.textAlign = 'center';
-    this.ctx.fillText(line0, this.width / 2, (this.height / 3)-20);
-    this.ctx.font = "16px Luckiest Guy";
-    this.ctx.fillText(" ", this.width / 2, (this.height / 3));
-    this.ctx.fillText(line1, this.width / 2, (this.height / 3) + 20);
-    this.ctx.fillText(line2, this.width / 2, (this.height / 3) + 40);
-    this.ctx.fillText(line3, this.width / 2, (this.height / 3) + 60);
   }
 
   isRestarted(e) {
